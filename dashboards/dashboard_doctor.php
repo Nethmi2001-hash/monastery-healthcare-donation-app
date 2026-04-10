@@ -63,6 +63,7 @@ if ($doctor) {
     $doctor_id = $doctor['doctor_id'];
 }
 
+
 // Doctor can update own profile details from dashboard.
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_name']) && $_POST['form_name'] === 'update_my_profile' && $doctor_id) {
     $full_name = trim($_POST['full_name'] ?? '');
