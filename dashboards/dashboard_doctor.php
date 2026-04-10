@@ -18,6 +18,7 @@ $profile_error = '';
 $profile_success = '';
 $openProfileModal = isset($_GET['edit_profile']) && $_GET['edit_profile'] === '1';
 
+
 // Find linked doctor profile by email
 $doctor = null;
 $doctor_id = null;
