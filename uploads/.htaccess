@@ -1,0 +1,15 @@
+# Prevent PHP execution and directory browsing
+Options -Indexes -ExecCGI
+RemoveHandler .php .phtml .pl .py .jsp .asp .cfm .cgi .shtml
+
+# Deny access to all files by default
+<Files "*">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Allow only specific image types and PDFs
+<FilesMatch "\.(jpg|jpeg|png|gif|bmp|svg|pdf)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

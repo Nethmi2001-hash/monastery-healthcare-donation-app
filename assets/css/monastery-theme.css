@@ -1,0 +1,275 @@
+/* ================================
+   MONASTERY HEALTHCARE THEME
+   ================================ */
+
+:root {
+    --primary: #6E8662;
+    --primary-dark: #4F6645;
+    --accent: #8A5A3B;
+    --bg-main: #F7F4EE;
+    --card-bg: #ffffff;
+    --text-dark: #2F2C27;
+    --success: #2E7D32;
+    --danger: #B4232C;
+    --monastery-saffron: #6E8662;
+    --monastery-orange: #4F6645;
+    --monastery-light: #A6B79D;
+    --monastery-dark: #8A5A3B;
+    --monastery-pale: #ECE5D8;
+}
+
+/* ================================
+   GLOBAL
+   ================================ */
+
+body {
+    background: linear-gradient(135deg, #F7F4EE, #ECE6DA);
+    font-family: 'Segoe UI', sans-serif;
+    color: var(--text-dark);
+}
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+}
+
+* {
+    transition: all 0.2s ease-in-out;
+}
+
+/* ================================
+   CARDS
+   ================================ */
+
+.card,
+.glass-card,
+.stat-card,
+.chart-card,
+.alert-card,
+.upcoming-card,
+.stats-card {
+    border: 1px solid rgba(79, 102, 69, 0.12);
+    border-radius: 16px;
+    background: var(--card-bg);
+    box-shadow: 0 8px 26px rgba(32, 42, 29, 0.08);
+}
+
+.card:hover,
+.glass-card:hover,
+.stat-card:hover,
+.chart-card:hover,
+.alert-card:hover,
+.upcoming-card:hover,
+.stats-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px rgba(32, 42, 29, 0.14);
+}
+
+/* ================================
+   BUTTONS
+   ================================ */
+
+.btn {
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), #43583B);
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background-color: var(--danger);
+    border: none;
+}
+
+/* ================================
+   SIDEBAR
+   ================================ */
+
+.sidebar {
+    background: white;
+    box-shadow: 3px 0px 15px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar a {
+    border-radius: 10px;
+    margin: 5px 10px;
+    padding: 10px;
+    color: var(--text-dark);
+}
+
+.sidebar a:hover {
+    background: #ECE5D8;
+    padding-left: 18px;
+}
+
+.sidebar .active {
+    background: var(--primary);
+    color: white !important;
+}
+
+/* ================================
+   TABLES
+   ================================ */
+
+.table {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(32, 42, 29, 0.08);
+}
+
+.table thead {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+}
+
+.table-hover tbody tr:hover {
+    background: #F2EEE6;
+}
+
+/* ================================
+   FORMS
+   ================================ */
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #DAD3C7;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(110, 134, 98, 0.18);
+}
+
+/* ================================
+   BADGES
+   ================================ */
+
+.badge.bg-success {
+    background-color: var(--success) !important;
+}
+
+.badge.bg-danger {
+    background-color: var(--danger) !important;
+}
+
+/* ================================
+   PAGE HEADER
+   ================================ */
+
+.page-header {
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    padding: 1.7rem;
+    border-radius: 16px;
+    box-shadow: 0 12px 28px rgba(37, 53, 31, 0.2);
+}
+
+.page-header h2 {
+    font-weight: 700;
+}
+
+.page-header p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.card-header.bg-primary,
+.modal-header.bg-primary,
+.badge.bg-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+    border-color: transparent !important;
+}
+
+.btn-outline-primary {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background: var(--primary-dark);
+    border-color: var(--primary);
+}
+
+.icon-tone-primary { color: var(--primary) !important; }
+.icon-tone-accent { color: var(--accent) !important; }
+.icon-tone-success { color: var(--success) !important; }
+.icon-tone-danger { color: var(--danger) !important; }
+
+.icon-soft-bg {
+    width: 58px;
+    height: 58px;
+    border-radius: 14px;
+    background: rgba(110, 134, 98, 0.12);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7rem;
+}
+
+.interactive-lift {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.interactive-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(32, 42, 29, 0.14);
+}
+
+.identity-strip {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 1px solid rgba(110, 134, 98, 0.16);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 8px 22px rgba(32, 42, 29, 0.1);
+}
+
+.identity-photo {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #ECE5D8;
+}
+
+.identity-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.identity-text {
+    font-size: 0.86rem;
+    color: #6A655D;
+}
+
+/* ================================
+   LOGIN PAGE SPECIAL
+   ================================ */
+
+.login-wrapper {
+    background: linear-gradient(to right, #6E8662, #4F6645);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    border-radius: 18px;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+}
