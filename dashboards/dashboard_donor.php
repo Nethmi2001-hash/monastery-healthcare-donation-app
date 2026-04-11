@@ -94,6 +94,7 @@ if ($userId > 0 || !empty($userEmail)) {
     error_log("No valid user ID or email for donation queries");
 }
 
+
 // Recent donations
 $recent_donations = [];
 if ($userId > 0 || !empty($userEmail)) {
