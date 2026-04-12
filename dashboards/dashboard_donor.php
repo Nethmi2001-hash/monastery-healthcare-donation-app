@@ -117,6 +117,7 @@ if ($userId > 0 || !empty($userEmail)) {
     $stmt->close();
 }
 
+
 // Monthly donation trend (last 6 months)
 $monthly_trend = [];
 if ($userId > 0 || !empty($userEmail)) {
