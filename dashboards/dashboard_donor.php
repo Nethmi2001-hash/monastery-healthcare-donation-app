@@ -140,6 +140,7 @@ if ($userId > 0 || !empty($userEmail)) {
     }
 }
 
+
 // Donations by category
 $by_category = [];
 if ($userId > 0 || !empty($userEmail)) {
