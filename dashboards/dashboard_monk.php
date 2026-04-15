@@ -113,6 +113,7 @@ if ($monk_id) {
     ");
     if ($r) while ($row = $r->fetch_assoc()) $upcoming[] = $row;
 
+    
     // Recent medical records
     $records = [];
     $r = $conn->query("
