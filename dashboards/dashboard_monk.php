@@ -113,7 +113,7 @@ if ($monk_id) {
     ");
     if ($r) while ($row = $r->fetch_assoc()) $upcoming[] = $row;
 
-    
+
     // Recent medical records
     $records = [];
     $r = $conn->query("
@@ -126,6 +126,7 @@ if ($monk_id) {
     ");
     if ($r) while ($row = $r->fetch_assoc()) $records[] = $row;
 
+    
     // Past appointments
     $past = [];
     $r = $conn->query("
