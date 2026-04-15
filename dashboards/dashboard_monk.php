@@ -126,7 +126,7 @@ if ($monk_id) {
     ");
     if ($r) while ($row = $r->fetch_assoc()) $records[] = $row;
 
-    
+
     // Past appointments
     $past = [];
     $r = $conn->query("
@@ -139,6 +139,7 @@ if ($monk_id) {
     ");
     if ($r) while ($row = $r->fetch_assoc()) $past[] = $row;
 
+    
     // Monthly appointment data for chart
     $monthly_data = [];
     for ($i = 5; $i >= 0; $i--) {
