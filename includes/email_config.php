@@ -7,6 +7,7 @@
 // Email Configuration
 define('SMTP_ENABLED', true); // Set to false to disable email sending (for testing)
 
+
 // SMTP Server Settings
 define('SMTP_HOST', 'smtp.gmail.com'); // Gmail SMTP server
 define('SMTP_PORT', 587); // TLS port (or 465 for SSL)
