@@ -201,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_donate'])) {
             exit;
         }
 
-        
+
         // Handle bank slip upload
         $slip_path = null;
         if (isset($_FILES['bank_slip']) && $_FILES['bank_slip']['error'] === UPLOAD_ERR_OK) {
@@ -229,6 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_donate'])) {
     }
     exit;
 }
+
 
 // Overall monastery transparency data
 $total_monastery_donations = 0;
