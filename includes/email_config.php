@@ -37,6 +37,7 @@ define('EMAIL_REPLY_NAME', 'Monastery Admin');
 define('EMAIL_CHARSET', 'UTF-8');
 define('EMAIL_DEBUG', 0); // 0=off, 1=client, 2=server, 3=full
 
+
 // Monastery Information
 define('MONASTERY_NAME', 'Seela Suwa Herath Bikshu Gilan Arana');
 define('MONASTERY_ADDRESS', 'Your Monastery Address Here');
