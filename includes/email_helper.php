@@ -165,7 +165,7 @@ function generateReceiptPDF($donation_id) {
         return false;
     }
     
-    
+
     // Get donation details
     $stmt = $conn->prepare("
         SELECT d.*, c.name as category_name 
@@ -191,6 +191,7 @@ function generateReceiptPDF($donation_id) {
     }
     
     require_once($fpdf_path);
+    
     
     // Generate PDF
     class ReceiptPDF extends FPDF {
