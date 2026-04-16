@@ -14,6 +14,7 @@ define('SMTP_PORT', 587); // TLS port (or 465 for SSL)
 define('SMTP_SECURE', 'tls'); // 'tls' or 'ssl'
 define('SMTP_AUTH', true);
 
+
 // SMTP Credentials
 // IMPORTANT: For Gmail, use App Password (not regular password)
 // How to create App Password:
