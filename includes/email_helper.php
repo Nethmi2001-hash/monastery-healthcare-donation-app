@@ -221,7 +221,7 @@ function generateReceiptPDF($donation_id) {
     $pdf->Cell(0, 8, 'Date: ' . date('F d, Y', strtotime($donation['created_at'])), 0, 1, 'C');
     $pdf->Ln(10);
     
-    
+
     // Donor info
     $pdf->SetFont('Arial', 'B', 14);
     $pdf->Cell(0, 10, 'Donor Information', 0, 1);
@@ -237,6 +237,7 @@ function generateReceiptPDF($donation_id) {
         $pdf->Cell(0, 8, $donation['donor_email'], 0, 1);
     }
     $pdf->Ln(5);
+    
     
     // Amount
     $pdf->SetFont('Arial', 'B', 24);
