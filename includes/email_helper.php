@@ -49,6 +49,7 @@ function sendEmail($to, $subject, $body, $toName = '', $attachments = []) {
         $mail->CharSet = EMAIL_CHARSET;
         $mail->SMTPDebug = EMAIL_DEBUG;
         
+        
         // Recipients
         $mail->setFrom(EMAIL_FROM, EMAIL_FROM_NAME);
         $mail->addAddress($to, $toName);
