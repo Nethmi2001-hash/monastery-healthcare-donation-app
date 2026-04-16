@@ -192,7 +192,7 @@ function generateReceiptPDF($donation_id) {
     
     require_once($fpdf_path);
     
-    
+
     // Generate PDF
     class ReceiptPDF extends FPDF {
         function Header() {
@@ -220,6 +220,7 @@ function generateReceiptPDF($donation_id) {
     $pdf->Cell(0, 8, 'Receipt No: DON-' . str_pad($donation['donation_id'], 6, '0', STR_PAD_LEFT), 0, 1, 'C');
     $pdf->Cell(0, 8, 'Date: ' . date('F d, Y', strtotime($donation['created_at'])), 0, 1, 'C');
     $pdf->Ln(10);
+    
     
     // Donor info
     $pdf->SetFont('Arial', 'B', 14);
