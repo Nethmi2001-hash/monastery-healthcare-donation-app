@@ -55,7 +55,7 @@ function sendEmail($to, $subject, $body, $toName = '', $attachments = []) {
         $mail->addAddress($to, $toName);
         $mail->addReplyTo(EMAIL_REPLY_TO, EMAIL_REPLY_NAME);
         
-        
+
         // Attachments
         if (!empty($attachments)) {
             foreach ($attachments as $file) {
@@ -164,6 +164,7 @@ function generateReceiptPDF($donation_id) {
     if ($conn->connect_error) {
         return false;
     }
+    
     
     // Get donation details
     $stmt = $conn->prepare("
