@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['form_name'])) {
         $check->close();
     }
 
+    
     // Update category
     if ($_POST['form_name'] === "update" && !empty($_POST['id']) && !empty($_POST['name'])) {
         $id   = intval($_POST['id']);
