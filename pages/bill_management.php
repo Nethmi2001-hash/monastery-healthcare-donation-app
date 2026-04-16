@@ -130,6 +130,7 @@ if ($result) {
     }
 }
 
+
 // Calculate statistics
 $stats = [
     'total_bills' => 0,
