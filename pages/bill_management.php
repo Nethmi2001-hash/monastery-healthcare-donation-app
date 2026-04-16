@@ -154,6 +154,7 @@ if ($result) $stats['paid_amount'] = $result->fetch_assoc()['total'];
 $result = $conn->query("SELECT COALESCE(SUM(amount), 0) as total FROM bills WHERE MONTH(bill_date) = MONTH(CURRENT_DATE()) AND YEAR(bill_date) = YEAR(CURRENT_DATE())");
 if ($result) $stats['this_month'] = $result->fetch_assoc()['total'];
 
+
 // Get category-wise expenses for this month
 $category_expenses = [];
 $result = $conn->query("
