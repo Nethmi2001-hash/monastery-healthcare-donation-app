@@ -152,6 +152,7 @@ if ($result) {
     }
 }
 
+
 // Get weekly appointment data for chart
 $weekly_data = [];
 for ($i = 6; $i >= 0; $i--) {
