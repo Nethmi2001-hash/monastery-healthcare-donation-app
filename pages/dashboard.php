@@ -181,6 +181,7 @@ for ($i = 5; $i >= 0; $i--) {
 // Get alerts and notifications
 $alerts = [];
 
+
 // Check for pending appointments (scheduled for today or past dates)
 $result = $conn->query("SELECT COUNT(*) as count FROM appointments WHERE status = 'scheduled' AND app_date <= CURRENT_DATE()");
 if ($result) {
