@@ -50,12 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['form_name'])) {
         $check->close();
     }
 
-    
+
     // Update category
     if ($_POST['form_name'] === "update" && !empty($_POST['id']) && !empty($_POST['name'])) {
         $id   = intval($_POST['id']);
         $name = trim($_POST['name']);
-		
+	
+        
         // Check for duplicates 
         $check = $con->prepare("SELECT category_id FROM categories WHERE LOWER(name) = LOWER(?) AND category_id != ?");
         $check->bind_param("si", $name, $id);
