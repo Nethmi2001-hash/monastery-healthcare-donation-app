@@ -86,6 +86,7 @@ $stats = [
     'monthly_donation_amount' => 0
 ];
 
+
 // Get monks count
 $result = $conn->query("SELECT COUNT(*) as count FROM monks WHERE status = 'active'");
 if ($result) $stats['total_monks'] = $result->fetch_assoc()['count'];
