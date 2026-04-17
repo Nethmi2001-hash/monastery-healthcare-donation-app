@@ -23,6 +23,7 @@ switch ($userRole) {
         exit();
 }
 
+
 // Admin Dashboard (default)
 // Database connection
 require_once __DIR__ . '/../includes/db_config.php';
