@@ -101,6 +101,7 @@ if ($result) $stats['total_doctors'] = $result->fetch_assoc()['count'];
 $result = $conn->query("SELECT COUNT(*) as count FROM appointments WHERE MONTH(app_date) = MONTH(CURRENT_DATE()) AND YEAR(app_date) = YEAR(CURRENT_DATE())");
 if ($result) $stats['total_appointments'] = $result->fetch_assoc()['count'];
 
+
 // Get pending appointments
 $result = $conn->query("SELECT COUNT(*) as count FROM appointments WHERE status = 'scheduled'");
 if ($result) $stats['pending_appointments'] = $result->fetch_assoc()['count'];
