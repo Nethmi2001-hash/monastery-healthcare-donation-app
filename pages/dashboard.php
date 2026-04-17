@@ -221,6 +221,7 @@ if ($result) {
     }
 }
 
+
 // Check for inactive doctors
 $result = $conn->query("SELECT COUNT(*) as count FROM doctors WHERE status = 'inactive'");
 if ($result) {
