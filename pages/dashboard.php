@@ -29,6 +29,7 @@ switch ($userRole) {
 require_once __DIR__ . '/../includes/db_config.php';
 $conn = getDBConnection();
 
+
 // Ensure appointment requests table exists for monk -> admin scheduling flow.
 $conn->query("CREATE TABLE IF NOT EXISTS appointment_requests (
     request_id INT PRIMARY KEY AUTO_INCREMENT,
