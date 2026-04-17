@@ -91,6 +91,7 @@ $stats = [
 $result = $conn->query("SELECT COUNT(*) as count FROM monks WHERE status = 'active'");
 if ($result) $stats['total_monks'] = $result->fetch_assoc()['count'];
 
+
 // Get doctors count
 $result = $conn->query("SELECT COUNT(*) as count FROM doctors WHERE status = 'active'");
 if ($result) $stats['total_doctors'] = $result->fetch_assoc()['count'];
