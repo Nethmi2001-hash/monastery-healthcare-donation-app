@@ -129,6 +129,7 @@ if ($result) {
 $result = $conn->query("SELECT COUNT(*) as count FROM appointments WHERE status = 'completed' AND MONTH(app_date) = MONTH(CURRENT_DATE())");
 if ($result) $stats['completed_appointments'] = $result->fetch_assoc()['count'];
 
+
 // Get monthly donations amount
 $result = $conn->query("SELECT COALESCE(SUM(amount), 0) as total FROM donations WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())");
 if ($result) $stats['monthly_donation_amount'] = $result->fetch_assoc()['total'];
