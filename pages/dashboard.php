@@ -236,6 +236,7 @@ if ($result) {
     }
 }
 
+
 // Positive feedback if no critical issues
 if (count($alerts) == 0) {
     $alerts[] = [
