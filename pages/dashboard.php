@@ -96,6 +96,7 @@ if ($result) $stats['total_monks'] = $result->fetch_assoc()['count'];
 $result = $conn->query("SELECT COUNT(*) as count FROM doctors WHERE status = 'active'");
 if ($result) $stats['total_doctors'] = $result->fetch_assoc()['count'];
 
+
 // Get appointments count (this month)
 $result = $conn->query("SELECT COUNT(*) as count FROM appointments WHERE MONTH(app_date) = MONTH(CURRENT_DATE()) AND YEAR(app_date) = YEAR(CURRENT_DATE())");
 if ($result) $stats['total_appointments'] = $result->fetch_assoc()['count'];
