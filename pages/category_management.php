@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['form_name'])) {
     }
 
 
+    
     // Delete category
     if ($_POST['form_name'] === "delete" && !empty($_POST['id'])) {
         $id = intval($_POST['id']);
