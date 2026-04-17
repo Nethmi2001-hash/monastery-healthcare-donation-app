@@ -8,6 +8,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     exit();
 }
 
+
 // Route to role-specific dashboards
 $userRole = $_SESSION['role_name'] ?? 'Admin';
 switch ($userRole) {
