@@ -134,6 +134,7 @@ if ($result) $stats['completed_appointments'] = $result->fetch_assoc()['count'];
 $result = $conn->query("SELECT COALESCE(SUM(amount), 0) as total FROM donations WHERE MONTH(created_at) = MONTH(CURRENT_DATE()) AND YEAR(created_at) = YEAR(CURRENT_DATE())");
 if ($result) $stats['monthly_donation_amount'] = $result->fetch_assoc()['total'];
 
+
 // Get today's appointments
 $today_appointments = [];
 $result = $conn->query("
