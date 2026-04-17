@@ -196,6 +196,7 @@ if ($result) {
     }
 }
 
+
 // Check for incoming monk requests that need assignment
 if ($stats['incoming_requests'] > 0) {
     $alerts[] = [
