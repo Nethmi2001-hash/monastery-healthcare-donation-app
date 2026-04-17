@@ -106,6 +106,7 @@ if ($result) $stats['total_appointments'] = $result->fetch_assoc()['count'];
 $result = $conn->query("SELECT COUNT(*) as count FROM appointments WHERE status = 'scheduled'");
 if ($result) $stats['pending_appointments'] = $result->fetch_assoc()['count'];
 
+
 // Get incoming appointment requests from monks
 $result = $conn->query("SELECT COUNT(*) as count FROM appointment_requests WHERE status = 'pending'");
 if ($result) $stats['incoming_requests'] = $result->fetch_assoc()['count'];
