@@ -141,6 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
             $notes = trim($_POST['notes'] ?? '');
             $status = $isDonor ? 'pending' : ($_POST['status'] ?? 'pending');
             
+            
             // Handle bank slip upload
             $slip_path = null;
             try {
