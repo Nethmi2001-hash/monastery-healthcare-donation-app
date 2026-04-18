@@ -16,7 +16,7 @@ if (isset($_POST['ajax_verify']) && isset($_POST['donation_id'])) {
     header('Content-Type: application/json');
     $donation_id = intval($_POST['donation_id']);
     
-    
+
     // Get donation details before verification
     $donation_query = $conn->prepare("
         SELECT d.*, c.name as category_name 
@@ -72,6 +72,7 @@ if (isset($_POST['ajax_reject']) && isset($_POST['donation_id'])) {
 
 $error = "";
 $success = "";
+
 
 // Get user info
 $userId = $_SESSION['user_id'] ?? 0;
