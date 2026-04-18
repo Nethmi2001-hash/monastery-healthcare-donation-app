@@ -168,6 +168,7 @@ if ($title_result) {
     }
 }
 
+
 // Get all monks with title info
 $monks = [];
 if ($isDoctor && $currentDoctorId) {
