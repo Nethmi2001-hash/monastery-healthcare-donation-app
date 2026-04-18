@@ -17,6 +17,7 @@ $start_date = $_GET['start_date'] ?? date('Y-m-01');
 $end_date = $_GET['end_date'] ?? date('Y-m-t');
 $report_type = $_GET['report_type'] ?? 'financial';
 
+
 // Financial Report Data
 $donations_by_category = [];
 $expenses_by_category = [];
