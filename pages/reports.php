@@ -42,6 +42,7 @@ if ($report_type == 'financial') {
         }
     }
 
+    
     // Expenses by category
     $result = $conn->query("
         SELECT c.name as category, SUM(b.amount) as total
