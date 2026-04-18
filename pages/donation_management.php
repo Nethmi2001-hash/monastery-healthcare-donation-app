@@ -141,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
             $notes = trim($_POST['notes'] ?? '');
             $status = $isDonor ? 'pending' : ($_POST['status'] ?? 'pending');
             
-            
+
             // Handle bank slip upload
             $slip_path = null;
             try {
@@ -229,6 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
         $donation_result = $donation_query->get_result();
         $donation_data = $donation_result->fetch_assoc();
         $donation_query->close();
+        
         
         // Verify donation
         $stmt = $conn->prepare("UPDATE donations SET status='verified', verified_by=?, verified_at=NOW() WHERE donation_id=?");
