@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
     }
 }
 
+
 // Fetch rooms
 $rooms_res = $con->query("SELECT * FROM rooms ORDER BY name ASC");
 
