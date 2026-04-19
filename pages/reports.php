@@ -42,7 +42,7 @@ if ($report_type == 'financial') {
         }
     }
 
-    
+
     // Expenses by category
     $result = $conn->query("
         SELECT c.name as category, SUM(b.amount) as total
@@ -100,6 +100,7 @@ if ($report_type == 'appointments') {
         }
     }
 }
+
 
 // Donor Report
 $top_donors = [];
