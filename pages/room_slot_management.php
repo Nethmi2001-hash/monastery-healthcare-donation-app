@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
     }
 }
 
+
 // Fetch room slots with room info
 $slots_query = "SELECT rs.*, r.name as room_name, r.type 
                 FROM room_slots rs 
