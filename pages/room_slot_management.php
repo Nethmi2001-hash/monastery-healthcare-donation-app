@@ -82,6 +82,7 @@ $slots_query = "SELECT rs.*, r.name as room_name, r.type
                 ORDER BY r.name, rs.day_of_week, rs.start_time";
 $slots_res = $con->query($slots_query);
 
+
 // Fetch rooms for dropdown
 $rooms_res = $con->query("SELECT room_id, name, type FROM rooms ORDER BY name ASC");
 $rooms = [];
