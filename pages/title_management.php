@@ -26,6 +26,7 @@ $error   = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_name'])) {
     $form_name = $_POST['form_name'];
 
+    
     //  Create title
     if ($form_name === "create" && !empty($_POST['user_title'])) {
         $title = trim($_POST['user_title']);
