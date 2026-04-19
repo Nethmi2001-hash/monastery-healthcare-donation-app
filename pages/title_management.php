@@ -26,7 +26,7 @@ $error   = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_name'])) {
     $form_name = $_POST['form_name'];
 
-    
+
     //  Create title
     if ($form_name === "create" && !empty($_POST['user_title'])) {
         $title = trim($_POST['user_title']);
@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['form_name'])) {
         $check_stmt->close();
     }
 
+    
     //  Update title
     elseif ($form_name === "update" && !empty($_POST['id']) && !empty($_POST['user_title'])) {
 	$id = intval($_POST['id']);
