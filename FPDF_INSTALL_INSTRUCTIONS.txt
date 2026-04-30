@@ -1,0 +1,43 @@
+FPDF LIBRARY INSTALLATION INSTRUCTIONS
+========================================
+
+To enable PDF receipt generation, follow these steps:
+
+Option 1: Download FPDF (Recommended)
+--------------------------------------
+1. Visit: http://www.fpdf.org
+2. Click "Download" button
+3. Extract the FPDF zip file
+4. Copy the "fpdf" folder to: c:\xamp\htdocs\test\fpdf\
+5. The main file should be at: c:\xamp\htdocs\test\fpdf\fpdf.php
+
+Option 2: Manual Download
+--------------------------
+1. Visit: https://github.com/Setasign/FPDF/archive/refs/heads/master.zip
+2. Download and extract
+3. Rename "FPDF-master" to "fpdf"
+4. Move to: c:\xamp\htdocs\test\fpdf\
+
+Testing PDF Generation
+----------------------
+1. Login to the system (admin@monastery.lk / admin123)
+2. Go to Donation Management
+3. Find a VERIFIED donation
+4. Click the green "Receipt" button
+5. PDF will download automatically
+
+Troubleshooting
+---------------
+- If you see HTML receipt instead of PDF: FPDF is not installed yet
+- Error "Class 'FPDF' not found": Check fpdf folder location
+- Permission denied: Ensure XAMPP has write permissions
+
+Current Status
+--------------
+✓ generate_receipt.php created (with HTML fallback)
+✓ Download Receipt button added to verified donations
+✓ Monastery-themed receipt template ready
+⏳ Waiting for FPDF library installation
+
+Note: The system works with HTML receipts until FPDF is installed!
+You can print HTML receipts using the browser's print function.
