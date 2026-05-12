@@ -222,6 +222,34 @@ if ($result) {
     }
 }
 
+// Check for pending alms date requests
+$conn->query("CREATE TABLE IF NOT EXISTS donation_date_requests (
+    request_id INT PRIMARY KEY AUTO_INCREMENT,
+    donor_name VARCHAR(120) NOT NULL,
+    donor_email VARCHAR(160) NOT NULL,
+    donor_phone VARCHAR(40) NOT NULL,
+    requested_date DATE NOT NULL,
+    meal_type VARCHAR(20) NOT NULL DEFAULT 'lunch',
+    status ENUM('pending','approved','rejected') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reviewed_by INT NULL,
+    reviewed_at TIMESTAMP NULL,
+    INDEX idx_status (status),
+    INDEX idx_requested_date (requested_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+$result = $conn->query("SELECT COUNT(*) as count FROM donation_date_requests WHERE status = 'pending'");
+if ($result) {
+    $pending_alms = $result->fetch_assoc()['count'];
+    if ($pending_alms > 0) {
+        $alerts[] = [
+            'type' => 'warning',
+            'icon' => 'bi-calendar-heart',
+            'message' => "$pending_alms pending alms date request(s) awaiting your approval",
+            'link' => 'donation_date_requests.php'
+        ];
+    }
+}
+
 // Positive feedback if no critical issues
 if (count($alerts) == 0) {
     $alerts[] = [

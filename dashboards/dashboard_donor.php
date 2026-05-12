@@ -112,6 +112,82 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_donate'])) {
     exit;
 }
 
+// Handle AJAX alms date request submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_alms_request'])) {
+    header('Content-Type: application/json');
+    try {
+        $donor_name = $userName;
+        $donor_email = $userEmail;
+        $donor_phone = trim($_POST['donor_phone'] ?? '');
+        $requested_date = trim($_POST['requested_date'] ?? '');
+        $meal_type = trim($_POST['meal_type'] ?? 'lunch');
+
+        // Ensure table exists
+        $conn->query("CREATE TABLE IF NOT EXISTS donation_date_requests (
+            request_id INT PRIMARY KEY AUTO_INCREMENT,
+            donor_name VARCHAR(120) NOT NULL,
+            donor_email VARCHAR(160) NOT NULL,
+            donor_phone VARCHAR(40) NOT NULL,
+            requested_date DATE NOT NULL,
+            meal_type VARCHAR(20) NOT NULL DEFAULT 'lunch',
+            status ENUM('pending','approved','rejected') DEFAULT 'pending',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            reviewed_by INT NULL,
+            reviewed_at TIMESTAMP NULL,
+            INDEX idx_status (status),
+            INDEX idx_requested_date (requested_date)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+        // Validate
+        if (empty($donor_name)) {
+            echo json_encode(['success' => false, 'message' => 'Donor name is required.']);
+            exit;
+        }
+        if (empty($donor_phone)) {
+            echo json_encode(['success' => false, 'message' => 'Phone number is required.']);
+            exit;
+        }
+        if (empty($requested_date)) {
+            echo json_encode(['success' => false, 'message' => 'Please select a date.']);
+            exit;
+        }
+        if ($requested_date < date('Y-m-d')) {
+            echo json_encode(['success' => false, 'message' => 'Date cannot be in the past.']);
+            exit;
+        }
+        $allowed_meals = ['morning_food', 'lunch'];
+        if (!in_array($meal_type, $allowed_meals, true)) {
+            $meal_type = 'lunch';
+        }
+
+        // Check if date+meal already reserved
+        $check = $conn->prepare("SELECT request_id FROM donation_date_requests WHERE requested_date = ? AND meal_type = ? AND status IN ('pending','approved') LIMIT 1");
+        $check->bind_param('ss', $requested_date, $meal_type);
+        $check->execute();
+        $checkRes = $check->get_result();
+        if ($checkRes && $checkRes->num_rows > 0) {
+            $check->close();
+            echo json_encode(['success' => false, 'message' => 'That date and meal are already reserved. Please choose another.']);
+            exit;
+        }
+        $check->close();
+
+        $stmt = $conn->prepare("INSERT INTO donation_date_requests (donor_name, donor_email, donor_phone, requested_date, meal_type, status, created_at) VALUES (?, ?, ?, ?, ?, 'pending', NOW())");
+        $stmt->bind_param('sssss', $donor_name, $donor_email, $donor_phone, $requested_date, $meal_type);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Alms date request submitted successfully! You will be notified once approved.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Database error: ' . $stmt->error]);
+        }
+        $stmt->close();
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    $conn->close();
+    exit;
+}
+
 // Get donor's donation stats with better filtering - use both ID and email for maximum compatibility
 $stats = [
     'total_donated' => 0,
@@ -238,6 +314,36 @@ if ($catResult) {
     }
 }
 
+
+// Fetch donor's alms date requests
+$alms_requests = [];
+if (!empty($userEmail)) {
+    // Ensure table exists
+    $conn->query("CREATE TABLE IF NOT EXISTS donation_date_requests (
+        request_id INT PRIMARY KEY AUTO_INCREMENT,
+        donor_name VARCHAR(120) NOT NULL,
+        donor_email VARCHAR(160) NOT NULL,
+        donor_phone VARCHAR(40) NOT NULL,
+        requested_date DATE NOT NULL,
+        meal_type VARCHAR(20) NOT NULL DEFAULT 'lunch',
+        status ENUM('pending','approved','rejected') DEFAULT 'pending',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        reviewed_by INT NULL,
+        reviewed_at TIMESTAMP NULL,
+        INDEX idx_status (status),
+        INDEX idx_requested_date (requested_date)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+    $almsStmt = $conn->prepare("SELECT * FROM donation_date_requests WHERE donor_email = ? ORDER BY created_at DESC LIMIT 10");
+    $almsStmt->bind_param('s', $userEmail);
+    $almsStmt->execute();
+    $almsResult = $almsStmt->get_result();
+    if ($almsResult) {
+        while ($row = $almsResult->fetch_assoc()) {
+            $alms_requests[] = $row;
+        }
+    }
+    $almsStmt->close();
+}
 
 // Overall monastery transparency data
 $total_monastery_donations = 0;
@@ -468,6 +574,121 @@ require_once __DIR__ . '/../includes/init.php';
     </div>
 </div>
 
+    <!-- My Alms Date Requests -->
+    <div class="modern-card mb-4 animate-fade-in">
+        <div class="card-header-modern">
+            <h6><i class="bi bi-calendar-heart me-2"></i>My Alms Date Requests</h6>
+            <button class="btn btn-sm" style="background:var(--primary-500,#f97316);color:#fff;font-weight:600;border-radius:8px;padding:6px 16px;" data-bs-toggle="modal" data-bs-target="#almsRequestModal">
+                <i class="bi bi-plus-lg me-1"></i>Request Date
+            </button>
+        </div>
+        <div class="card-body-modern" style="padding:0;">
+            <?php if (count($alms_requests) > 0): ?>
+            <div class="table-responsive">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Requested Date</th>
+                            <th>Meal Type</th>
+                            <th>Status</th>
+                            <th>Submitted</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($alms_requests as $areq): ?>
+                        <tr>
+                            <td><strong><?= date('M j, Y', strtotime($areq['requested_date'])) ?></strong></td>
+                            <td>
+                                <?php if ($areq['meal_type'] === 'morning_food'): ?>
+                                    <span class="badge-modern badge-neutral"><i class="bi bi-sunrise me-1"></i>Morning Food</span>
+                                <?php else: ?>
+                                    <span class="badge-modern badge-neutral"><i class="bi bi-sun me-1"></i>Lunch</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php
+                                    $ast = $areq['status'];
+                                    $astStyles = [
+                                        'pending'  => 'background:#fef9c3;color:#ca8a04;',
+                                        'approved' => 'background:#dcfce7;color:#16a34a;',
+                                        'rejected' => 'background:#fee2e2;color:#dc2626;',
+                                    ];
+                                    $astDots = [
+                                        'pending'  => '#ca8a04',
+                                        'approved' => '#16a34a',
+                                        'rejected' => '#dc2626',
+                                    ];
+                                    $astBs = $astStyles[$ast] ?? 'background:#f1f5f9;color:#64748b;';
+                                    $astDc = $astDots[$ast] ?? '#64748b';
+                                ?>
+                                <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;<?= $astBs ?>">
+                                    <span style="width:7px;height:7px;border-radius:50%;background:<?= $astDc ?>;display:inline-block;"></span>
+                                    <?= ucfirst($ast) ?>
+                                </span>
+                            </td>
+                            <td><?= date('M j, Y', strtotime($areq['created_at'])) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <?php else: ?>
+                <div class="empty-state" style="padding:48px 16px;">
+                    <i class="bi bi-calendar-heart" style="font-size:48px;color:var(--primary-400);"></i>
+                    <h5 style="font-size:16px;margin-top:16px;">No alms date requests yet</h5>
+                    <p style="font-size:13px;color:var(--text-secondary);">Request a date to offer alms (food) to the monastery</p>
+                    <button class="btn btn-sm" style="background:var(--primary-500);color:#fff;padding:8px 20px;border-radius:8px;font-weight:600;margin-top:8px;" data-bs-toggle="modal" data-bs-target="#almsRequestModal">
+                        <i class="bi bi-calendar-plus me-1"></i>Request a Date
+                    </button>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<!-- Alms Date Request Modal -->
+<div class="modal fade" id="almsRequestModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-calendar-heart"></i> Request Alms Date</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="almsRequestForm">
+                <div class="modal-body">
+                    <div id="almsAlert" style="display:none;" class="alert alert-sm mb-3"></div>
+                    <p class="text-muted" style="font-size:13px;">Request a date to offer alms (morning food or lunch) to the monks at the monastery.</p>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Preferred Date <span class="text-danger">*</span></label>
+                        <input type="date" name="requested_date" id="almsDate" class="form-control" min="<?= date('Y-m-d', strtotime('+1 day')) ?>" max="<?= date('Y-m-d', strtotime('+6 months')) ?>" required>
+                        <div class="invalid-feedback" id="almsDateError">Please select a valid future date (within 6 months).</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Meal Type <span class="text-danger">*</span></label>
+                        <select name="meal_type" id="almsMealType" class="form-select" required>
+                            <option value="lunch" selected>Lunch (Dana)</option>
+                            <option value="morning_food">Morning Food</option>
+                        </select>
+                        <div class="invalid-feedback">Please select a meal type.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Contact Phone <span class="text-danger">*</span></label>
+                        <input type="tel" name="donor_phone" id="almsPhone" class="form-control" placeholder="07X XXX XXXX" pattern="^0[0-9]{9}$" maxlength="10" required>
+                        <div class="invalid-feedback" id="almsPhoneError">Enter a valid 10-digit Sri Lankan phone number (e.g. 0771234567).</div>
+                        <small class="text-muted">10 digits starting with 0</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-sm" id="almsSubmitBtn" style="background:var(--primary-500,#f97316);color:#fff;font-weight:600;">
+                        <i class="bi bi-calendar-check"></i> Submit Request
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Make Donation Modal -->
 <div class="modal fade" id="donateModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -610,6 +831,118 @@ document.getElementById('donateForm').addEventListener('submit', function(e) {
     .finally(() => {
         btn.disabled = false;
         btn.innerHTML = '<i class="bi bi-heart"></i> Submit Donation';
+    });
+});
+</script>
+
+<script>
+document.getElementById('almsRequestForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const btn = document.getElementById('almsSubmitBtn');
+    const alertDiv = document.getElementById('almsAlert');
+
+    // Client-side validation
+    const dateInput = document.getElementById('almsDate');
+    const phoneInput = document.getElementById('almsPhone');
+    const mealInput = document.getElementById('almsMealType');
+    let isValid = true;
+
+    // Reset validation states
+    [dateInput, phoneInput, mealInput].forEach(el => el.classList.remove('is-invalid'));
+    alertDiv.style.display = 'none';
+
+    // Date validation
+    const selectedDate = new Date(dateInput.value);
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0,0,0,0);
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 6);
+
+    if (!dateInput.value) {
+        dateInput.classList.add('is-invalid');
+        document.getElementById('almsDateError').textContent = 'Please select a date.';
+        isValid = false;
+    } else if (selectedDate < tomorrow) {
+        dateInput.classList.add('is-invalid');
+        document.getElementById('almsDateError').textContent = 'Date must be at least tomorrow.';
+        isValid = false;
+    } else if (selectedDate > maxDate) {
+        dateInput.classList.add('is-invalid');
+        document.getElementById('almsDateError').textContent = 'Date cannot be more than 6 months ahead.';
+        isValid = false;
+    }
+
+    // Phone validation (Sri Lankan: 10 digits starting with 0)
+    const phoneRegex = /^0[0-9]{9}$/;
+    const phoneVal = phoneInput.value.replace(/\s+/g, '');
+    if (!phoneVal) {
+        phoneInput.classList.add('is-invalid');
+        document.getElementById('almsPhoneError').textContent = 'Phone number is required.';
+        isValid = false;
+    } else if (!phoneRegex.test(phoneVal)) {
+        phoneInput.classList.add('is-invalid');
+        document.getElementById('almsPhoneError').textContent = 'Enter a valid 10-digit phone number (e.g. 0771234567).';
+        isValid = false;
+    }
+
+    // Meal type validation
+    if (!mealInput.value || !['lunch', 'morning_food'].includes(mealInput.value)) {
+        mealInput.classList.add('is-invalid');
+        isValid = false;
+    }
+
+    if (!isValid) {
+        alertDiv.style.display = 'block';
+        alertDiv.className = 'alert alert-danger mb-3';
+        alertDiv.textContent = 'Please fix the errors above before submitting.';
+        return;
+    }
+
+    const formData = new FormData(form);
+    formData.append('ajax_alms_request', '1');
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
+    alertDiv.style.display = 'none';
+
+    fetch('/monastery-healthcare-donation-app/dashboards/dashboard_donor.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => {
+        if (!r.ok) throw new Error('Server error: ' + r.status);
+        return r.text();
+    })
+    .then(text => {
+        try {
+            return JSON.parse(text);
+        } catch(e) {
+            console.error('Server response:', text);
+            throw new Error('Invalid server response.');
+        }
+    })
+    .then(data => {
+        alertDiv.style.display = 'block';
+        if (data.success) {
+            alertDiv.className = 'alert alert-success mb-3';
+            alertDiv.textContent = data.message;
+            form.reset();
+            setTimeout(() => location.reload(), 1500);
+        } else {
+            alertDiv.className = 'alert alert-danger mb-3';
+            alertDiv.textContent = data.message;
+        }
+    })
+    .catch(err => {
+        alertDiv.style.display = 'block';
+        alertDiv.className = 'alert alert-danger mb-3';
+        alertDiv.textContent = err.message || 'Network error, please try again.';
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-calendar-check"></i> Submit Request';
     });
 });
 </script>

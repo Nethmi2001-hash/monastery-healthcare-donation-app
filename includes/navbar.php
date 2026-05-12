@@ -143,6 +143,9 @@ $isMonk = ($userRole === 'Monk');
     <a class="sidebar-link" href="#" data-bs-toggle="modal" data-bs-target="#donateModal">
       <i class="bi bi-heart"></i> Make Donation
     </a>
+    <a class="sidebar-link" href="#" data-bs-toggle="modal" data-bs-target="#almsRequestModal">
+      <i class="bi bi-calendar-heart"></i> Request Alms Date
+    </a>
 
     <div class="sidebar-section-label">Tools</div>
     <a class="sidebar-link <?= isActivePage('chatbot.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/chatbot.php">
