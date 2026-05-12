@@ -48,6 +48,70 @@ if ($userId <= 0 && empty($userEmail)) {
 // Debug: Log current session info
 error_log("Dashboard Donor - User ID: $userId, Email: $userEmail, Role: $userRole");
 
+// Handle AJAX donation submission - MUST be before any HTML output
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_donate'])) {
+    header('Content-Type: application/json');
+    try {
+        $donor_name = $userName;
+        $donor_email = $userEmail;
+        $donor_user_id = $userId;
+        $amount = floatval($_POST['amount']);
+        $category_id = intval($_POST['category_id']);
+        $bank = trim($_POST['bank'] ?? '');
+        $branch = trim($_POST['brand'] ?? '');
+        $reference_number = trim($_POST['reference_number'] ?? '');
+        $notes = trim($_POST['notes'] ?? '');
+        $method = 'bank';
+        $status = 'pending';
+
+        // Prepend bank and branch info to notes
+        $bank_info = '';
+        if (!empty($bank)) $bank_info .= 'Bank: ' . $bank;
+        if (!empty($branch)) $bank_info .= ' | Branch: ' . $branch;
+        if (!empty($bank_info) && !empty($notes)) {
+            $notes = $bank_info . ' | ' . $notes;
+        } elseif (!empty($bank_info)) {
+            $notes = $bank_info;
+        }
+
+        if (empty($donor_name) || empty($category_id)) {
+            echo json_encode(['success' => false, 'message' => 'Donor name and category are required.']);
+            exit;
+        }
+        if ($amount < 100) {
+            echo json_encode(['success' => false, 'message' => 'Amount must be at least Rs. 100.00.']);
+            exit;
+        }
+
+        // Handle bank slip upload
+        $slip_path = null;
+        if (isset($_FILES['bank_slip']) && $_FILES['bank_slip']['error'] === UPLOAD_ERR_OK) {
+            $uploadDir = __DIR__ . '/uploads/slips/';
+            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+            $ext = pathinfo($_FILES['bank_slip']['name'], PATHINFO_EXTENSION);
+            $filename = 'slip_' . time() . '_' . uniqid() . '.' . $ext;
+            if (move_uploaded_file($_FILES['bank_slip']['tmp_name'], $uploadDir . $filename)) {
+                $slip_path = 'uploads/slips/' . $filename;
+            }
+        }
+
+        $stmt = $conn->prepare("INSERT INTO donations (donor_name, donor_email, donor_user_id, amount, category_id, method, bank_reference, notes, status, slip_path, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $created_by = $_SESSION['user_id'];
+        $stmt->bind_param("ssidisssssi", $donor_name, $donor_email, $donor_user_id, $amount, $category_id, $method, $reference_number, $notes, $status, $slip_path, $created_by);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Donation submitted for verification!']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Database error: ' . $stmt->error]);
+        }
+        $stmt->close();
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
+    }
+    $conn->close();
+    exit;
+}
+
 // Get donor's donation stats with better filtering - use both ID and email for maximum compatibility
 $stats = [
     'total_donated' => 0,
@@ -174,57 +238,6 @@ if ($catResult) {
     }
 }
 
-// Handle AJAX donation submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax_donate'])) {
-    header('Content-Type: application/json');
-    try {
-        $donor_name = $userName;
-        $donor_email = $userEmail;
-        $donor_user_id = $userId;
-        $amount = floatval($_POST['amount']);
-        $category_id = intval($_POST['category_id']);
-        $bank = trim($_POST['bank'] ?? '');
-        $brand = trim($_POST['brand'] ?? '');
-        $reference_number = trim($_POST['reference_number'] ?? '');
-        $notes = trim($_POST['notes'] ?? '');
-        $status = 'pending';
-
-        if (empty($donor_name) || empty($category_id)) {
-            echo json_encode(['success' => false, 'message' => 'Donor name and category are required.']);
-            exit;
-        }
-        if ($amount < 100) {
-            echo json_encode(['success' => false, 'message' => 'Amount must be at least Rs. 100.00.']);
-            exit;
-        }
-
-        // Handle bank slip upload
-        $slip_path = null;
-        if (isset($_FILES['bank_slip']) && $_FILES['bank_slip']['error'] === UPLOAD_ERR_OK) {
-            $uploadDir = __DIR__ . '/uploads/slips/';
-            if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
-            $ext = pathinfo($_FILES['bank_slip']['name'], PATHINFO_EXTENSION);
-            $filename = 'slip_' . time() . '_' . uniqid() . '.' . $ext;
-            if (move_uploaded_file($_FILES['bank_slip']['tmp_name'], $uploadDir . $filename)) {
-                $slip_path = 'uploads/slips/' . $filename;
-            }
-        }
-
-        $stmt = $conn->prepare("INSERT INTO donations (donor_name, donor_email, donor_user_id, amount, category_id, bank, brand, bank_reference, notes, status, slip_path, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $created_by = $_SESSION['user_id'];
-        $stmt->bind_param("ssiisssssssi", $donor_name, $donor_email, $donor_user_id, $amount, $category_id, $bank, $brand, $reference_number, $notes, $status, $slip_path, $created_by);
-
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Donation submitted for verification!']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Database error: ' . $stmt->error]);
-        }
-        $stmt->close();
-    } catch (Exception $e) {
-        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
-    }
-    exit;
-}
 
 // Overall monastery transparency data
 $total_monastery_donations = 0;
@@ -561,11 +574,22 @@ document.getElementById('donateForm').addEventListener('submit', function(e) {
     btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Submitting...';
     alertDiv.style.display = 'none';
 
-    fetch('dashboard.php', {
+    fetch('/monastery-healthcare-donation-app/dashboards/dashboard_donor.php', {
         method: 'POST',
         body: formData
     })
-    .then(r => r.json())
+    .then(r => {
+        if (!r.ok) throw new Error('Server error: ' + r.status);
+        return r.text();
+    })
+    .then(text => {
+        try {
+            return JSON.parse(text);
+        } catch(e) {
+            console.error('Server response:', text);
+            throw new Error('Invalid server response. Check console for details.');
+        }
+    })
     .then(data => {
         alertDiv.style.display = 'block';
         if (data.success) {
@@ -578,10 +602,10 @@ document.getElementById('donateForm').addEventListener('submit', function(e) {
             alertDiv.textContent = data.message;
         }
     })
-    .catch(() => {
+    .catch(err => {
         alertDiv.style.display = 'block';
         alertDiv.className = 'alert alert-danger mb-3';
-        alertDiv.textContent = 'Network error, please try again.';
+        alertDiv.textContent = err.message || 'Network error, please try again.';
     })
     .finally(() => {
         btn.disabled = false;
