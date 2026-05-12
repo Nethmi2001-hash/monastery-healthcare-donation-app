@@ -43,7 +43,7 @@ define('MONASTERY_NAME', 'Seela Suwa Herath Bikshu Gilan Arana');
 define('MONASTERY_ADDRESS', 'Your Monastery Address Here');
 define('MONASTERY_PHONE', '+94 XX XXX XXXX');
 define('MONASTERY_EMAIL', 'info@seelasuwa.lk');
-define('MONASTERY_WEBSITE', 'http://localhost/test/');
+define('MONASTERY_WEBSITE', 'http://localhost/monastery-healthcare-donation-app/');
 
 // Email Templates Directory
 define('EMAIL_TEMPLATES_DIR', __DIR__ . '/../email_templates/');
@@ -80,3 +80,4 @@ define('SMTP_PASSWORD', 'your_password');
 define('DEV_MODE', true); // Set to false in production
 define('DEV_EMAIL', 'test@example.com'); // Test email address
 ?>
+

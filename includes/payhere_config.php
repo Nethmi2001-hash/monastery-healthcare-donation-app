@@ -25,7 +25,7 @@ define('PAYHERE_MIN_AMOUNT', 100);  // Rs. 100 minimum
 
 // URLs
 $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'];
-$project_path = '/test';  // Adjust if your project is in different folder
+$project_path = '/monastery-healthcare-donation-app';  // Adjust if your project is in different folder
 
 define('PAYHERE_RETURN_URL', $base_url . $project_path . '/api/payhere_return.php');
 define('PAYHERE_CANCEL_URL', $base_url . $project_path . '/api/payhere_cancel.php');
@@ -126,3 +126,4 @@ function logPayHereTransaction($order_id, $status, $message, $data = []) {
     file_put_contents($log_file, $log_entry, FILE_APPEND);
 }
 ?>
+

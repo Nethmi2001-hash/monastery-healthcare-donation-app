@@ -74,7 +74,7 @@ function generateDonationQR($donation_id) {
     // Create verification URL
     $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") 
                 . "://" . $_SERVER['HTTP_HOST'];
-    $verify_url = $base_url . "/test/api/verify_donation.php?id=" . $donation_id 
+    $verify_url = $base_url . "/monastery-healthcare-donation-app/api/verify_donation.php?id=" . $donation_id 
                   . "&hash=" . md5($donation_id . $donation['amount']);
     
     // Generate QR code
@@ -92,7 +92,7 @@ function generateMonkQR($monk_id) {
     // Create monk profile URL
     $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") 
                 . "://" . $_SERVER['HTTP_HOST'];
-    $profile_url = $base_url . "/test/monk_profile.php?id=" . $monk_id;
+    $profile_url = $base_url . "/monastery-healthcare-donation-app/monk_profile.php?id=" . $monk_id;
     
     // Generate QR code
     return generateQRCode($profile_url, null, 'M');
@@ -121,7 +121,7 @@ function generateAppointmentQR($appointment_id) {
     // Create check-in URL
     $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") 
                 . "://" . $_SERVER['HTTP_HOST'];
-    $checkin_url = $base_url . "/test/appointment_checkin.php?id=" . $appointment_id;
+    $checkin_url = $base_url . "/monastery-healthcare-donation-app/appointment_checkin.php?id=" . $appointment_id;
     
     // Generate QR code
     return generateQRCode($checkin_url, null, 'M');
@@ -150,3 +150,4 @@ function verifyQRCode($data) {
     ];
 }
 ?>
+

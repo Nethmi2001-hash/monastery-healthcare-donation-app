@@ -4,7 +4,7 @@ session_start();
 
 // Require login
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /test/pages/auth/login.php');
+    header('Location: /monastery-healthcare-donation-app/pages/auth/login.php');
     exit;
 }
 
@@ -518,7 +518,7 @@ while ($row = $categories_result->fetch_assoc()) {
             doctor_count: <?= $stats['doctor_count'] ?>,
             donation_categories: <?= json_encode($donation_categories) ?>,
             payment_methods: ["Cash", "Bank Transfer", "Card", "PayHere Online Payment"],
-            website: "http://localhost/test/"
+            website: "http://localhost/monastery-healthcare-donation-app/"
         };
     </script>
 
@@ -577,3 +577,4 @@ define('OPENAI_TEMPERATURE', 0.7);
     <script src="assets/js/chatbot_script.js"></script>
 </body>
 </html>
+

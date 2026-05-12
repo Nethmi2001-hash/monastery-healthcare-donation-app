@@ -55,12 +55,12 @@ $isMonk = ($userRole === 'Monk');
 
 <!-- Modern Design System -->
 <?php $modernCssVer = @filemtime(__DIR__ . '/../assets/css/modern-design.css') ?: time(); ?>
-<link rel="stylesheet" href="/test/assets/css/modern-design.css?v=<?= $modernCssVer ?>">
-<script src="/test/assets/js/modern-app.js"></script>
+<link rel="stylesheet" href="/monastery-healthcare-donation-app/assets/css/modern-design.css?v=<?= $modernCssVer ?>">
+<script src="/monastery-healthcare-donation-app/assets/js/modern-app.js"></script>
 
 <!-- Sidebar -->
 <aside class="app-sidebar" id="appSidebar">
-  <a href="/test/index.php" class="sidebar-header" style="text-decoration:none;color:inherit;">
+  <a href="/monastery-healthcare-donation-app/index.php" class="sidebar-header" style="text-decoration:none;color:inherit;">
     <div class="sidebar-logo" style="font-size: 20px;">
       ☸
     </div>
@@ -72,68 +72,68 @@ $isMonk = ($userRole === 'Monk');
 
   <nav class="sidebar-nav">
     <div class="sidebar-section-label"><?= __('dashboard') ?></div>
-    <a class="sidebar-link <?= isActivePage('dashboard.php', $currentPage) ?>" href="/test/pages/dashboard.php">
+    <a class="sidebar-link <?= isActivePage('dashboard.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/dashboard.php">
       <i class="bi bi-grid-1x2"></i> <?= __('dashboard') ?>
     </a>
 
     <?php if ($isAdmin): ?>
     <!-- Admin: Full Access -->
     <div class="sidebar-section-label">Main</div>
-    <a class="sidebar-link <?= isActivePage('donation_management.php', $currentPage) ?>" href="/test/pages/donation_management.php">
+    <a class="sidebar-link <?= isActivePage('donation_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/donation_management.php">
       <i class="bi bi-cash-coin"></i> <?= __('donations') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('donation_date_requests.php', $currentPage) ?>" href="/test/pages/donation_date_requests.php">
+    <a class="sidebar-link <?= isActivePage('donation_date_requests.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/donation_date_requests.php">
       <i class="bi bi-calendar-event"></i> Alms Dates
     </a>
-    <a class="sidebar-link <?= isActivePage('bill_management.php', $currentPage) ?>" href="/test/pages/bill_management.php">
+    <a class="sidebar-link <?= isActivePage('bill_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/bill_management.php">
       <i class="bi bi-receipt-cutoff"></i> <?= __('bills') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('patient_appointments.php', $currentPage) ?>" href="/test/pages/patient_appointments.php">
+    <a class="sidebar-link <?= isActivePage('patient_appointments.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/patient_appointments.php">
       <i class="bi bi-calendar2-check"></i> <?= __('appointments') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('reports.php', $currentPage) ?>" href="/test/pages/reports.php">
+    <a class="sidebar-link <?= isActivePage('reports.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/reports.php">
       <i class="bi bi-bar-chart-line"></i> <?= __('reports') ?>
     </a>
 
     <div class="sidebar-section-label"><?= __('manage') ?></div>
-    <a class="sidebar-link <?= isActivePage('monk_management.php', $currentPage) ?>" href="/test/pages/monk_management.php">
+    <a class="sidebar-link <?= isActivePage('monk_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/monk_management.php">
       <i class="bi bi-person-hearts"></i> <?= __('monks') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('doctor_management.php', $currentPage) ?>" href="/test/pages/doctor_management.php">
+    <a class="sidebar-link <?= isActivePage('doctor_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/doctor_management.php">
       <i class="bi bi-person-badge"></i> <?= __('doctors') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('room_management.php', $currentPage) ?>" href="/test/pages/room_management.php">
+    <a class="sidebar-link <?= isActivePage('room_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/room_management.php">
       <i class="bi bi-door-open"></i> <?= __('rooms') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('room_slot_management.php', $currentPage) ?>" href="/test/pages/room_slot_management.php">
+    <a class="sidebar-link <?= isActivePage('room_slot_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/room_slot_management.php">
       <i class="bi bi-calendar3-range"></i> <?= __('room_slots') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('table.php', $currentPage) ?>" href="/test/pages/table.php">
+    <a class="sidebar-link <?= isActivePage('table.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/table.php">
       <i class="bi bi-people"></i> <?= __('users') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('category_management.php', $currentPage) ?>" href="/test/pages/category_management.php">
+    <a class="sidebar-link <?= isActivePage('category_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/category_management.php">
       <i class="bi bi-tags"></i> <?= __('categories') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('title_management.php', $currentPage) ?>" href="/test/pages/title_management.php">
+    <a class="sidebar-link <?= isActivePage('title_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/title_management.php">
       <i class="bi bi-award"></i> <?= __('titles') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('doctor_availability.php', $currentPage) ?>" href="/test/pages/doctor_availability.php">
+    <a class="sidebar-link <?= isActivePage('doctor_availability.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/doctor_availability.php">
       <i class="bi bi-clock-history"></i> <?= __('doctor_availability') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('import_monks.php', $currentPage) ?>" href="/test/pages/import_monks.php">
+    <a class="sidebar-link <?= isActivePage('import_monks.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/import_monks.php">
       <i class="bi bi-upload"></i> <?= __('import_monks') ?>
     </a>
 
     <?php elseif ($isDoctor): ?>
     <!-- Doctor: Appointments, Patients, Availability -->
     <div class="sidebar-section-label">My Practice</div>
-    <a class="sidebar-link <?= isActivePage('patient_appointments.php', $currentPage) ?>" href="/test/pages/patient_appointments.php">
+    <a class="sidebar-link <?= isActivePage('patient_appointments.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/patient_appointments.php">
       <i class="bi bi-calendar2-check"></i> <?= __('appointments') ?>
     </a>
-    <a class="sidebar-link <?= isActivePage('monk_management.php', $currentPage) ?>" href="/test/pages/monk_management.php">
+    <a class="sidebar-link <?= isActivePage('monk_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/monk_management.php">
       <i class="bi bi-person-hearts"></i> Patient Records
     </a>
-    <a class="sidebar-link <?= isActivePage('doctor_availability.php', $currentPage) ?>" href="/test/pages/doctor_availability.php">
+    <a class="sidebar-link <?= isActivePage('doctor_availability.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/doctor_availability.php">
       <i class="bi bi-clock-history"></i> My Availability
     </a>
 
@@ -143,26 +143,29 @@ $isMonk = ($userRole === 'Monk');
     <a class="sidebar-link" href="#" data-bs-toggle="modal" data-bs-target="#donateModal">
       <i class="bi bi-heart"></i> Make Donation
     </a>
+    <a class="sidebar-link" href="#" data-bs-toggle="modal" data-bs-target="#almsRequestModal">
+      <i class="bi bi-calendar-heart"></i> Request Alms Date
+    </a>
 
     <div class="sidebar-section-label">Tools</div>
-    <a class="sidebar-link <?= isActivePage('chatbot.php', $currentPage) ?>" href="/test/pages/chatbot.php">
+    <a class="sidebar-link <?= isActivePage('chatbot.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/chatbot.php">
       <i class="bi bi-robot"></i> <?= __('ai_assistant') ?>
     </a>
 
     <?php elseif ($isMonk): ?>
     <!-- Monk: Health Records, Appointments, Doctors -->
     <div class="sidebar-section-label">My Health</div>
-    <a class="sidebar-link <?= isActivePage('patient_appointments.php', $currentPage) ?>" href="/test/pages/patient_appointments.php">
+    <a class="sidebar-link <?= isActivePage('patient_appointments.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/patient_appointments.php">
       <i class="bi bi-calendar2-check"></i> My Appointments
     </a>
-    <a class="sidebar-link <?= isActivePage('doctor_management.php', $currentPage) ?>" href="/test/pages/doctor_management.php">
+    <a class="sidebar-link <?= isActivePage('doctor_management.php', $currentPage) ?>" href="/monastery-healthcare-donation-app/pages/doctor_management.php">
       <i class="bi bi-person-badge"></i> View Doctors
     </a>
     <?php endif; ?>
   </nav>
 
   <div class="sidebar-footer">
-    <a class="sidebar-link" href="/test/pages/auth/logout.php">
+    <a class="sidebar-link" href="/monastery-healthcare-donation-app/pages/auth/logout.php">
       <i class="bi bi-box-arrow-left"></i> <?= __('logout') ?>
     </a>
   </div>
@@ -207,15 +210,15 @@ $isMonk = ($userRole === 'Monk');
           </div>
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-          <li><a class="dropdown-item" href="/test/pages/dashboard.php"><i class="bi bi-grid me-2"></i> Dashboard</a></li>
+          <li><a class="dropdown-item" href="/monastery-healthcare-donation-app/pages/dashboard.php"><i class="bi bi-grid me-2"></i> Dashboard</a></li>
           <?php if ($isDoctor): ?>
-          <li><a class="dropdown-item" href="/test/dashboards/dashboard_doctor.php?edit_profile=1"><i class="bi bi-pencil-square me-2"></i> Update My Profile</a></li>
+          <li><a class="dropdown-item" href="/monastery-healthcare-donation-app/dashboards/dashboard_doctor.php?edit_profile=1"><i class="bi bi-pencil-square me-2"></i> Update My Profile</a></li>
           <?php endif; ?>
           <?php if ($isMonk): ?>
-          <li><a class="dropdown-item" href="/test/dashboards/dashboard_monk.php?edit_profile=1"><i class="bi bi-pencil-square me-2"></i> Update My Details</a></li>
+          <li><a class="dropdown-item" href="/monastery-healthcare-donation-app/dashboards/dashboard_monk.php?edit_profile=1"><i class="bi bi-pencil-square me-2"></i> Update My Details</a></li>
           <?php endif; ?>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="/test/pages/auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i> <?= __('logout') ?></a></li>
+          <li><a class="dropdown-item text-danger" href="/monastery-healthcare-donation-app/pages/auth/logout.php"><i class="bi bi-box-arrow-right me-2"></i> <?= __('logout') ?></a></li>
         </ul>
       </div>
     </div>
@@ -223,3 +226,4 @@ $isMonk = ($userRole === 'Monk');
 
   <!-- Page Content -->
   <div class="app-content">
+

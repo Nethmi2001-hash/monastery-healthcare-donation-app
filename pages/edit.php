@@ -5,7 +5,7 @@ include ROOT_PATH . 'includes/navbar.php';
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /test/login.php");
+    header("Location: /monastery-healthcare-donation-app/login.php");
     exit();
 }
 
@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" class="btn btn-primary w-100">Update User</button>
             </form>
 
-            <p class="mt-3 text-center"><a href="/test/pages/table.php">Back to Users Table</a></p>
+            <p class="mt-3 text-center"><a href="/monastery-healthcare-donation-app/pages/table.php">Back to Users Table</a></p>
         </div>
     </div>
 </div>
@@ -163,3 +163,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </html>
 
 <?php $con->close(); ?>
+

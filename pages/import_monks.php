@@ -4,7 +4,7 @@ session_start();
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /test/login.php");
+    header("Location: /monastery-healthcare-donation-app/login.php");
     exit();
 }
 
@@ -140,7 +140,7 @@ $conn->close();
     <?php if ($success): ?>
         <div class="alert-modern alert-success-modern">
             <i class="bi bi-check-circle"></i> <?= htmlspecialchars($success) ?>
-            <a href="/test/pages/monk_management.php" class="btn-modern btn-primary-modern ms-3">View Monks</a>
+            <a href="/monastery-healthcare-donation-app/pages/monk_management.php" class="btn-modern btn-primary-modern ms-3">View Monks</a>
         </div>
     <?php endif; ?>
 
@@ -194,7 +194,7 @@ $conn->close();
                                 <button type="submit" class="btn-modern btn-primary-modern mt-3">
                                     <i class="bi bi-check-circle"></i> Confirm &amp; Import Data
                                 </button>
-                                <a href="/test/pages/import_monks.php" class="btn-modern mt-3 ms-2">Cancel</a>
+                                <a href="/monastery-healthcare-donation-app/pages/import_monks.php" class="btn-modern mt-3 ms-2">Cancel</a>
                             </div>
                         <?php endif; ?>
                     </form>
@@ -328,3 +328,4 @@ function handleDrop(e) {
 
 </body>
 </html>
+

@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $insertStmt->close();
 
                                 if ($ok) {
-                                    header('Location: /test/pages/auth/login.php?registered=1');
+                                    header('Location: /monastery-healthcare-donation-app/pages/auth/login.php?registered=1');
                                     exit();
                                 }
 
@@ -380,7 +380,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <nav>
-    <a href="/test/index.php" class="nav-logo">
+    <a href="/monastery-healthcare-donation-app/index.php" class="nav-logo">
         <div class="nav-logo-mark">&#9784;</div>
         <div>
             <span class="nav-logo-name">Seela suwa herath</span>
@@ -388,12 +388,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </a>
     <ul class="nav-links">
-        <li><a href="/test/index.php#mission">Our Mission</a></li>
-        <li><a href="/test/index.php#how">How It Works</a></li>
-        <li><a href="/test/pages/public/public_transparency.php">Transparency</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#mission">Our Mission</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#how">How It Works</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li>
         <li><a href="register.php" class="active">Register</a></li>
-        <li><a href="/test/pages/auth/login.php">Sign In</a></li>
-        <li><a href="/test/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
     </ul>
 </nav>
 
@@ -401,7 +401,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="left-panel">
     <div class="left-panel-bg"></div>
     <div class="left-content">
-        <!-- <a href="/test/index.php" class="brand">
+        <!-- <a href="/monastery-healthcare-donation-app/index.php" class="brand">
             <div class="brand-mark">☸</div>
             <div>
                 <span class="brand-name">Seela suwa herath</span>
@@ -442,14 +442,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="form-wrapper">
         <div class="form-header">
             <h1>Create Account</h1>
-            <p>Already registered? <a href="/test/pages/auth/login.php">Sign in here</a></p>
+            <p>Already registered? <a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign in here</a></p>
         </div>
 
         <?php if (!empty($error)): ?>
         <div class="error-msg">⚠ <?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
 
-        <form method="POST" action="/test/pages/auth/register.php">
+        <form method="POST" action="/monastery-healthcare-donation-app/pages/auth/register.php">
             <?php if (function_exists('csrfField')): ?>
             <?php csrfField(); ?>
             <?php endif; ?>
@@ -532,13 +532,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="divider"><span>or continue as</span></div>
 
         <div class="donate-link-row">
-            <a href="/test/pages/public/public_donate.php" class="donate-link-btn">
+            <a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="donate-link-btn">
                 Guest Donor — donate without account
             </a>
         </div>
 
         <div class="back-link">
-            <a href="/test/index.php">← Back to home</a>
+            <a href="/monastery-healthcare-donation-app/index.php">← Back to home</a>
         </div>
     </div>
 </div>
@@ -547,7 +547,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <footer>
     <div class="foot-grid">
         <div><div class="foot-brand">☸ Seela suwa herath</div><p class="foot-tag">Supporting monastery welfare through community generosity, transparent governance, and compassionate care.</p></div>
-        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/test/pages/public/public_donate.php">Donate</a></li><li><a href="/test/pages/public/public_transparency.php">Transparency</a></li><li><a href="register.php">Register</a></li><li><a href="/test/pages/auth/login.php">Sign In</a></li></ul></div>
+        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php">Donate</a></li><li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li><li><a href="register.php">Register</a></li><li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li></ul></div>
         <div class="foot-col"><h4>Welfare</h4><ul><li><a href="#">Healthcare</a></li><li><a href="#">Housing</a></li><li><a href="#">Appointments</a></li><li><a href="#">Reports</a></li></ul></div>
         <div class="foot-col"><h4>Info</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
     </div>
@@ -633,3 +633,4 @@ function togglePw(id) {
 </script>
 </body>
 </html>
+

@@ -120,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['role_name'] = $user['role_name'];
                     $_SESSION['last_activity'] = time();
 
-                    header('Location: /test/pages/dashboard.php');
+                    header('Location: /monastery-healthcare-donation-app/pages/dashboard.php');
                     exit();
                 }
             }
@@ -480,7 +480,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
 <nav>
-    <a href="/test/index.php" class="nav-logo">
+    <a href="/monastery-healthcare-donation-app/index.php" class="nav-logo">
         <div class="nav-logo-mark">&#9784;</div>
         <div>
             <span class="nav-logo-name">Seela suwa herath</span>
@@ -488,12 +488,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </a>
     <ul class="nav-links">
-        <li><a href="/test/index.php#mission">Our Mission</a></li>
-        <li><a href="/test/index.php#how">How It Works</a></li>
-        <li><a href="/test/pages/public/public_transparency.php">Transparency</a></li>
-        <li><a href="/test/pages/auth/register.php">Register</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#mission">Our Mission</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#how">How It Works</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/auth/register.php">Register</a></li>
         <li><a href="login.php" class="active">Sign In</a></li>
-        <li><a href="/test/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
     </ul>
 </nav>
 
@@ -501,7 +501,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="left-panel">
     <div class="left-panel-bg"></div>
     <div class="left-content">
-        <!-- <a href="/test/index.php" class="brand">
+        <!-- <a href="/monastery-healthcare-donation-app/index.php" class="brand">
             <div class="brand-mark">☸</div>
             <div>
                 <span class="brand-name">Seela suwa herath</span>
@@ -547,12 +547,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="form-wrapper">
         <div class="form-header">
             <h1>Sign In</h1>
-            <p>New here? <a href="/test/pages/auth/register.php">Create an account</a></p>
+            <p>New here? <a href="/monastery-healthcare-donation-app/pages/auth/register.php">Create an account</a></p>
         </div>
 
-        <div class="success-msg" style="margin-bottom: 20px;">
+        <!-- <div class="success-msg" style="margin-bottom: 20px;">
             Admin sign-in: admin@monastery.lk / admin123
-        </div>
+        </div> -->
 
         <?php if (!empty($success)): ?>
         <div class="success-msg">✓ <?= htmlspecialchars($success) ?></div>
@@ -562,7 +562,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="error-msg">⚠ <?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
 
-        <form method="POST" action="/test/pages/auth/login.php">
+        <form method="POST" action="/monastery-healthcare-donation-app/pages/auth/login.php">
             <?php if (function_exists('csrfField')): ?>
             <?php csrfField(); ?>
             <?php endif; ?>
@@ -584,7 +584,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label class="remember">
                     <input type="checkbox" name="remember"> Remember me
                 </label>
-                <a href="/test/pages/auth/forgot_password.php" class="forgot-link">Forgot password?</a>
+                <a href="/monastery-healthcare-donation-app/pages/auth/forgot_password.php" class="forgot-link">Forgot password?</a>
             </div>
 
             <button type="submit" class="btn-submit">Sign In</button>
@@ -593,13 +593,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="divider"><span>or</span></div>
 
         <div class="donate-link-row">
-            <a href="/test/pages/public/public_donate.php" class="donate-link-btn">
+            <a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="donate-link-btn">
                 🙏 Donate without signing in
             </a>
         </div>
 
         <div class="back-link">
-            <a href="/test/index.php">← Back to home</a>
+            <a href="/monastery-healthcare-donation-app/index.php">← Back to home</a>
         </div>
     </div>
 </div>
@@ -608,7 +608,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <footer>
     <div class="foot-grid">
         <div><div class="foot-brand">☸ Seela suwa herath</div><p class="foot-tag">Supporting monastery welfare through community generosity, transparent governance, and compassionate care.</p></div>
-        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/test/pages/public/public_donate.php">Donate</a></li><li><a href="/test/pages/public/public_transparency.php">Transparency</a></li><li><a href="/test/pages/auth/register.php">Register</a></li><li><a href="login.php">Sign In</a></li></ul></div>
+        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php">Donate</a></li><li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li><li><a href="/monastery-healthcare-donation-app/pages/auth/register.php">Register</a></li><li><a href="login.php">Sign In</a></li></ul></div>
         <div class="foot-col"><h4>Welfare</h4><ul><li><a href="#">Healthcare</a></li><li><a href="#">Housing</a></li><li><a href="#">Appointments</a></li><li><a href="#">Reports</a></li></ul></div>
         <div class="foot-col"><h4>Info</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
     </div>
@@ -678,3 +678,4 @@ function togglePw() {
 </script>
 </body>
 </html>
+

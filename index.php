@@ -164,9 +164,9 @@
     <ul class="nav-links">
         <li><a href="#mission">Our Mission</a></li>
         <li><a href="#how">How It Works</a></li>
-        <li><a href="/test/pages/public/public_transparency.php">Transparency</a></li>
-        <li><a href="/test/pages/auth/login.php">Sign In</a></li>
-        <li><a href="/test/pages/public/public_donate.php" class="nav-donate-btn">Donate Now</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="nav-donate-btn">Donate Now</a></li>
     </ul>
 </nav>
 
@@ -184,7 +184,7 @@
         <h1 class="hero-title">Caring for Those<br>Who <em>Serve</em><br>Our World</h1>
         <p class="hero-desc">Supporting the health, welfare, and dignified living of monks and clergy through transparent, community-driven generosity.</p>
         <div class="hero-btns">
-            <a href="/test/pages/public/public_donate.php" class="btn-hp">Donate Today</a>
+            <a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="btn-hp">Donate Today</a>
             <a href="#mission" class="btn-hg">Learn More</a>
         </div>
     </div>
@@ -258,7 +258,7 @@
 <footer>
     <div class="foot-grid">
         <div><div class="foot-brand">☸ Seela suwa herath</div><p class="foot-tag">Supporting monastery welfare through community generosity, transparent governance, and compassionate care.</p></div>
-        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/test/pages/public/public_donate.php">Donate</a></li><li><a href="/test/pages/public/public_transparency.php">Transparency</a></li><li><a href="/test/pages/auth/register.php">Register</a></li><li><a href="/test/pages/auth/login.php">Sign In</a></li></ul></div>
+        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php">Donate</a></li><li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li><li><a href="/monastery-healthcare-donation-app/pages/auth/register.php">Register</a></li><li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li></ul></div>
         <div class="foot-col"><h4>Welfare</h4><ul><li><a href="#">Healthcare</a></li><li><a href="#">Housing</a></li><li><a href="#">Appointments</a></li><li><a href="#">Reports</a></li></ul></div>
         <div class="foot-col"><h4>Info</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
     </div>
@@ -272,3 +272,4 @@ document.querySelectorAll('.chip').forEach(c=>c.addEventListener('click',functio
 </script>
 </body>
 </html>
+

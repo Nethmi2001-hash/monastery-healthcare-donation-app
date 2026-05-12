@@ -4,7 +4,7 @@ session_start();
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /test/pages/auth/login.php');
+    header('Location: /monastery-healthcare-donation-app/pages/auth/login.php');
     exit();
 }
 
@@ -486,14 +486,18 @@ if ($isDonor || $isDoctor) {
                                 <?php if ($donation['donor_email']): ?>
                                     <br><small class="text-muted"><i class="bi bi-envelope"></i> <?= htmlspecialchars($donation['donor_email']) ?></small>
                                 <?php endif; ?>
-                                <?php if ($donation['bank'] || $donation['brand']): ?>
+                                <?php
+                                    $donationBank = $donation['bank'] ?? '';
+                                    $donationBrand = $donation['brand'] ?? '';
+                                ?>
+                                <?php if ($donationBank || $donationBrand): ?>
                                     <br><small class="text-muted">
-                                        <?php if ($donation['bank']): ?>
-                                            <i class="bi bi-bank"></i> <?= htmlspecialchars($donation['bank']) ?>
+                                        <?php if ($donationBank): ?>
+                                            <i class="bi bi-bank"></i> <?= htmlspecialchars($donationBank) ?>
                                         <?php endif; ?>
-                                        <?php if ($donation['bank'] && $donation['brand']): echo ' • '; endif; ?>
-                                        <?php if ($donation['brand']): ?>
-                                            <i class="bi bi-geo-alt"></i> <?= htmlspecialchars($donation['brand']) ?>
+                                        <?php if ($donationBank && $donationBrand): echo ' • '; endif; ?>
+                                        <?php if ($donationBrand): ?>
+                                            <i class="bi bi-geo-alt"></i> <?= htmlspecialchars($donationBrand) ?>
                                         <?php endif; ?>
                                     </small>
                                 <?php endif; ?>
@@ -1163,3 +1167,4 @@ window.openDonationModal = openDonationModal;
 </body>
 </html>
 <?php $conn->close(); ?>
+

@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/init.php';
 session_start();
 
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /test/pages/auth/login.php');
+    header('Location: /monastery-healthcare-donation-app/pages/auth/login.php');
     exit();
 }
 
@@ -1081,3 +1081,4 @@ window.addEventListener('load', function() {
 
 </body>
 </html>
+

@@ -4,7 +4,7 @@ session_start();
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /test/pages/auth/login.php');
+    header('Location: /monastery-healthcare-donation-app/pages/auth/login.php');
     exit();
 }
 
@@ -546,3 +546,4 @@ window.onbeforeprint = function() {
 
 </body>
 </html>
+
