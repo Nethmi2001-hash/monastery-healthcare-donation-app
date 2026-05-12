@@ -4,7 +4,7 @@ session_start();
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /test/pages/auth/login.php');
+    header('Location: /monastery-healthcare-donation-app/pages/auth/login.php');
     exit();
 }
 
@@ -607,3 +607,4 @@ new Chart(categoryCtx, {
 </body>
 </html>
 <?php $conn->close(); ?>
+

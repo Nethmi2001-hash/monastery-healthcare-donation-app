@@ -4,7 +4,7 @@ session_start();
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /test/login.php");
+    header("Location: /monastery-healthcare-donation-app/login.php");
     exit();
 }
 
@@ -249,3 +249,4 @@ $result = $con->query("SELECT * FROM titles ORDER BY title_id DESC");
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

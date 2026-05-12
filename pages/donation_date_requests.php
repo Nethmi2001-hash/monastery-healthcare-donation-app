@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/init.php';
 session_start();
 
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /test/login.php");
+    header("Location: /monastery-healthcare-donation-app/login.php");
     exit();
 }
 
@@ -226,3 +226,4 @@ require_once __DIR__ . '/../includes/init.php';
 </div>
 </body>
 </html>
+

@@ -8,16 +8,18 @@ session_start();
 require_once __DIR__ . '/../includes/db_config.php';
 require_once __DIR__ . '/../includes/csrf.php';
 
+$publicDonateUrl = BASE_URL . 'pages/public/public_donate.php';
+
 // Only accept POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: public_donate.php');
+    header('Location: ' . $publicDonateUrl);
     exit;
 }
 
 $conn = getDBConnection();
 
 if (!validateCSRFToken()) {
-    header('Location: public_donate.php?error=' . urlencode('Security validation failed. Please refresh and try again.'));
+    header('Location: ' . $publicDonateUrl . '?error=' . urlencode('Security validation failed. Please refresh and try again.'));
     exit;
 }
 
@@ -104,13 +106,13 @@ if ($method === 'bank') {
 // If validation errors, redirect back
 if (!empty($errors)) {
     $error_msg = implode('. ', $errors);
-    header('Location: public_donate.php?error=' . urlencode($error_msg) . '#donate');
+    header('Location: ' . $publicDonateUrl . '?error=' . urlencode($error_msg) . '#donate');
     exit;
 }
 
 if ($method === 'bank') {
     // Create uploads directory if not exists
-    $upload_dir = __DIR__ . '/uploads/bank_slips/';
+    $upload_dir = ROOT_PATH . 'uploads/bank_slips/';
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0755, true);
     }
@@ -122,7 +124,7 @@ if ($method === 'bank') {
 
     // Move uploaded file
     if (!move_uploaded_file($_FILES['bank_slip']['tmp_name'], $destination)) {
-        header('Location: public_donate.php?error=' . urlencode('Failed to upload file. Please try again.'));
+        header('Location: ' . $publicDonateUrl . '?error=' . urlencode('Failed to upload file. Please try again.'));
         exit;
     }
 
@@ -162,7 +164,7 @@ if ($stmt->execute()) {
     $conn->close();
     
     // Redirect with success
-    header('Location: public_donate.php?success_ref=' . $donation_id);
+    header('Location: ' . $publicDonateUrl . '?success_ref=' . $donation_id);
     exit;
 } else {
     $error = $stmt->error;
@@ -174,6 +176,6 @@ if ($stmt->execute()) {
         unlink($destination);
     }
     
-    header('Location: public_donate.php?error=' . urlencode('Failed to save donation. Please try again.'));
+    header('Location: ' . $publicDonateUrl . '?error=' . urlencode('Failed to save donation. Please try again.'));
     exit;
 }

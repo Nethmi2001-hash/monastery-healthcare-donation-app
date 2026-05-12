@@ -7,13 +7,15 @@ session_start();
 require_once __DIR__ . '/../includes/db_config.php';
 require_once __DIR__ . '/../includes/csrf.php';
 
+$publicDonateUrl = BASE_URL . 'pages/public/public_donate.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: public_donate.php#date-request');
+    header('Location: ' . $publicDonateUrl . '#date-request');
     exit;
 }
 
 if (!validateCSRFToken()) {
-    header('Location: public_donate.php?date_error=' . urlencode('Security validation failed. Please refresh and try again.') . '#date-request');
+    header('Location: ' . $publicDonateUrl . '?date_error=' . urlencode('Security validation failed. Please refresh and try again.') . '#date-request');
     exit;
 }
 
@@ -61,18 +63,18 @@ if ($requested_date !== '' && $requested_date < $today) {
 
 if (!empty($errors)) {
     $conn->close();
-    header('Location: public_donate.php?date_error=' . urlencode(implode('. ', $errors)) . '#date-request');
+    header('Location: ' . $publicDonateUrl . '?date_error=' . urlencode(implode('. ', $errors)) . '#date-request');
     exit;
 }
 
-$check = $conn->prepare("SELECT request_id FROM donation_date_requests WHERE requested_date = ? AND status IN ('pending','approved') LIMIT 1");
-$check->bind_param('s', $requested_date);
+$check = $conn->prepare("SELECT request_id FROM donation_date_requests WHERE requested_date = ? AND meal_type = ? AND status IN ('pending','approved') LIMIT 1");
+$check->bind_param('ss', $requested_date, $meal_type);
 $check->execute();
 $checkRes = $check->get_result();
 if ($checkRes && $checkRes->num_rows > 0) {
     $check->close();
     $conn->close();
-    header('Location: public_donate.php?date_error=' . urlencode('That date is already reserved. Please choose another.') . '#date-request');
+    header('Location: ' . $publicDonateUrl . '?date_error=' . urlencode('That date and meal are already reserved. Please choose another.') . '#date-request');
     exit;
 }
 $check->close();
@@ -84,13 +86,13 @@ $stmt->bind_param('sssss', $donor_name, $donor_email, $donor_phone, $requested_d
 if ($stmt->execute()) {
     $stmt->close();
     $conn->close();
-    header('Location: public_donate.php?date_success=1#date-request');
+    header('Location: ' . $publicDonateUrl . '?date_success=1#date-request');
     exit;
 }
 
 $error = $stmt->error;
 $stmt->close();
 $conn->close();
-header('Location: public_donate.php?date_error=' . urlencode('Failed to submit request. Please try again.') . '#date-request');
+header('Location: ' . $publicDonateUrl . '?date_error=' . urlencode('Failed to submit request. Please try again.') . '#date-request');
 exit;
 ?>

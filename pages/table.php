@@ -4,7 +4,7 @@ session_start();
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /test/login.php");
+    header("Location: /monastery-healthcare-donation-app/login.php");
     exit();
 }
 
@@ -65,7 +65,7 @@ if ($search !== '') {
                 </div>
                 <?php if($search): ?>
                 <div class="col-12">
-                    <a href="/test/pages/table.php" class="btn-modern btn-outline-modern btn-sm"><i class="bi bi-x-circle"></i> Clear Search</a>
+                    <a href="/monastery-healthcare-donation-app/pages/table.php" class="btn-modern btn-outline-modern btn-sm"><i class="bi bi-x-circle"></i> Clear Search</a>
                 </div>
                 <?php endif; ?>
             </form>
@@ -128,3 +128,4 @@ if ($search !== '') {
 </html>
 
 <?php $con->close(); ?>
+

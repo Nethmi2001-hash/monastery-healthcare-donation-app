@@ -605,7 +605,7 @@ $conn->close();
 
 <!-- NAV -->
 <nav>
-    <a href="/test/index.php" class="nav-logo">
+    <a href="/monastery-healthcare-donation-app/index.php" class="nav-logo">
         <div class="nav-logo-mark">☸</div>
         <div>
             <span class="nav-logo-name">Seela suwa herath</span>
@@ -613,11 +613,11 @@ $conn->close();
         </div>
     </a>
     <ul class="nav-links">
-        <li><a href="/test/index.php#mission">Our Mission</a></li>
-        <li><a href="/test/index.php#how">How It Works</a></li>
-        <li><a href="/test/pages/public/public_transparency.php">Transparency</a></li>
-        <li><a href="/test/pages/auth/login.php">Sign In</a></li>
-        <li><a href="/test/pages/public/public_donate.php" class="nav-donate active">Donate Now</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#mission">Our Mission</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#how">How It Works</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="nav-donate active">Donate Now</a></li>
     </ul>
 </nav>
 
@@ -663,7 +663,7 @@ $conn->close();
                 </script>
         <?php endif; ?>
 
-        <form method="POST" action="/test/api/process_donation_date_request.php" id="dateRequestForm">
+        <form method="POST" action="/monastery-healthcare-donation-app/api/process_donation_date_request.php" id="dateRequestForm">
             <?php if (function_exists('csrfField')): ?>
             <?php csrfField(); ?>
             <?php endif; ?>
@@ -732,7 +732,7 @@ $conn->close();
         </div>
         <?php endif; ?>
 
-        <form method="POST" action="/test/api/process_public_donation.php" enctype="multipart/form-data" id="donateForm">
+        <form method="POST" action="/monastery-healthcare-donation-app/api/process_public_donation.php" enctype="multipart/form-data" id="donateForm">
             <?php if (function_exists('csrfField')): ?>
             <?php csrfField(); ?>
             <?php endif; ?>
@@ -941,7 +941,7 @@ $conn->close();
                 <span class="impact-icon"></span>
                 <span>100% of funds are publicly reported</span>
             </div>
-            <a href="/test/pages/public/public_transparency.php" class="transparency-link">
+            <a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php" class="transparency-link">
                 View transparency reports &rarr;
             </a>
         </div>
@@ -958,10 +958,10 @@ $conn->close();
         <div class="foot-col">
             <h4>Platform</h4>
             <ul>
-                <li><a href="/test/pages/public/public_donate.php">Donate</a></li>
-                <li><a href="/test/pages/public/public_transparency.php">Transparency</a></li>
-                <li><a href="/test/pages/auth/register.php">Register</a></li>
-                <li><a href="/test/pages/auth/login.php">Sign In</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php">Donate</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/auth/register.php">Register</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li>
             </ul>
         </div>
         <div class="foot-col">
@@ -1109,7 +1109,7 @@ function sendChatbotMessage() {
     chatbotInput.value = '';
     chatbotTyping.classList.add('show');
 
-    fetch('/test/api/chatbot_api.php', {
+    fetch('/monastery-healthcare-donation-app/api/chatbot_api.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -1135,4 +1135,5 @@ function sendChatbotMessage() {
 </script>
 </body>
 </html>
+
 

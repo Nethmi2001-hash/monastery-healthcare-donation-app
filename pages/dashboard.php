@@ -4,7 +4,7 @@ session_start();
 
 // Check if user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header('Location: /test/pages/auth/login.php');
+    header('Location: /monastery-healthcare-donation-app/pages/auth/login.php');
     exit();
 }
 
@@ -297,7 +297,7 @@ if (count($alerts) == 0) {
     <?php if ($stats['incoming_requests'] > 0): ?>
     <div class="modern-card mb-4 animate-fade-in">
         <div class="card-body-modern" style="padding:16px 24px;">
-            <a href="/test/pages/patient_appointments.php" class="alert-modern alert-warning-modern" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+            <a href="/monastery-healthcare-donation-app/pages/patient_appointments.php" class="alert-modern alert-warning-modern" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
                 <i class="bi bi-inbox"></i>
                 <span><?= $stats['incoming_requests'] ?> incoming monk appointment request(s) waiting for doctor/room assignment</span>
                 <i class="bi bi-chevron-right ms-auto" style="font-size:12px;opacity:0.6;"></i>
@@ -315,7 +315,7 @@ if (count($alerts) == 0) {
                             <?php if (!empty($req['doctor_name'])): ?> &bull; Dr. <?= htmlspecialchars($req['doctor_name']) ?><?php endif; ?>
                         </div>
                     </div>
-                    <a href="/test/pages/patient_appointments.php" class="btn-modern btn-outline-modern" style="padding:6px 12px;font-size:12px;">Open</a>
+                    <a href="/monastery-healthcare-donation-app/pages/patient_appointments.php" class="btn-modern btn-outline-modern" style="padding:6px 12px;font-size:12px;">Open</a>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -397,31 +397,31 @@ if (count($alerts) == 0) {
     <!-- Quick Actions -->
     <div class="row g-3 mb-4 stagger-children">
         <div class="col-xl-2 col-md-4 col-6">
-            <a href="/test/pages/patient_appointments.php" class="quick-action-card">
+            <a href="/monastery-healthcare-donation-app/pages/patient_appointments.php" class="quick-action-card">
                 <div class="quick-action-icon" style="background:var(--primary-100);color:var(--primary-700);"><i class="bi bi-inbox"></i></div>
                 <span class="quick-action-label">Incoming Requests</span>
             </a>
         </div>
         <div class="col-xl-2 col-md-4 col-6">
-            <a href="/test/pages/donation_management.php" class="quick-action-card">
+            <a href="/monastery-healthcare-donation-app/pages/donation_management.php" class="quick-action-card">
                 <div class="quick-action-icon" style="background:var(--accent-100);color:var(--accent-700);"><i class="bi bi-cash-coin"></i></div>
                 <span class="quick-action-label">Add Donation</span>
             </a>
         </div>
         <div class="col-xl-2 col-md-4 col-6">
-            <a href="/test/pages/bill_management.php" class="quick-action-card">
+            <a href="/monastery-healthcare-donation-app/pages/bill_management.php" class="quick-action-card">
                 <div class="quick-action-icon" style="background:#ffe4e6;color:#be123c;"><i class="bi bi-receipt-cutoff"></i></div>
                 <span class="quick-action-label">Record Expense</span>
             </a>
         </div>
         <div class="col-xl-2 col-md-4 col-6">
-            <a href="/test/pages/monk_management.php" class="quick-action-card">
+            <a href="/monastery-healthcare-donation-app/pages/monk_management.php" class="quick-action-card">
                 <div class="quick-action-icon" style="background:#f3e8ff;color:#7c3aed;"><i class="bi bi-person-hearts"></i></div>
                 <span class="quick-action-label">Manage Monks</span>
             </a>
         </div>
         <div class="col-xl-2 col-md-4 col-6">
-            <a href="/test/pages/reports.php" class="quick-action-card">
+            <a href="/monastery-healthcare-donation-app/pages/reports.php" class="quick-action-card">
                 <div class="quick-action-icon" style="background:#dbeafe;color:#1d4ed8;"><i class="bi bi-graph-up-arrow"></i></div>
                 <span class="quick-action-label">View Reports</span>
             </a>
@@ -501,3 +501,4 @@ new Chart(financialCtx, {
 </body>
 </html>
 <?php $conn->close(); ?>
+

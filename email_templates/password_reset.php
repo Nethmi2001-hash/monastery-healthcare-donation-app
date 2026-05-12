@@ -5,7 +5,7 @@
 
 function getPasswordResetTemplate($userName, $resetLink, $expiryMinutes = 30) {
     $monastery_name = defined('MONASTERY_NAME') ? MONASTERY_NAME : 'Seela Suwa Herath Bikshu Gilan Arana';
-    $monastery_website = defined('MONASTERY_WEBSITE') ? MONASTERY_WEBSITE : 'http://localhost/test/';
+    $monastery_website = defined('MONASTERY_WEBSITE') ? MONASTERY_WEBSITE : 'http://localhost/monastery-healthcare-donation-app/';
     $name = htmlspecialchars($userName);
 
     return <<<HTML
@@ -133,3 +133,4 @@ function getPasswordResetTemplate($userName, $resetLink, $expiryMinutes = 30) {
 HTML;
 }
 ?>
+

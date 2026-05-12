@@ -193,17 +193,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <nav>
-    <a href="/test/index.php" class="nav-logo">
+    <a href="/monastery-healthcare-donation-app/index.php" class="nav-logo">
         <div class="nav-logo-mark">&#9784;</div>
         <div><span class="nav-logo-name">Seela suwa herath</span><span class="nav-logo-sub">Monastery Welfare</span></div>
     </a>
     <ul class="nav-links">
-        <li><a href="/test/index.php#mission">Our Mission</a></li>
-        <li><a href="/test/index.php#how">How It Works</a></li>
-        <li><a href="/test/pages/public/public_transparency.php">Transparency</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#mission">Our Mission</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#how">How It Works</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li>
         <li><a href="register.php">Register</a></li>
-        <li><a href="/test/pages/auth/login.php">Sign In</a></li>
-        <li><a href="/test/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
     </ul>
 </nav>
 
@@ -234,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?= htmlspecialchars($success) ?>
         </div>
         <div style="text-align:center">
-            <a href="/test/pages/auth/login.php" class="btn-signin">🔐 Sign In Now</a>
+            <a href="/monastery-healthcare-donation-app/pages/auth/login.php" class="btn-signin">🔐 Sign In Now</a>
         </div>
         <?php endif; ?>
 
@@ -243,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <?php if ($validToken): ?>
-        <form method="POST" action="/test/pages/auth/reset_password.php">
+        <form method="POST" action="/monastery-healthcare-donation-app/pages/auth/reset_password.php">
             <?php csrfField(); ?>
             <input type="hidden" name="token" value="<?= htmlspecialchars($token) ?>">
 
@@ -275,14 +275,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <?php endif; ?>
 
-        <div class="back-link"><a href="/test/pages/auth/login.php">← Back to Sign In</a></div>
+        <div class="back-link"><a href="/monastery-healthcare-donation-app/pages/auth/login.php">← Back to Sign In</a></div>
     </div>
 </div>
 
 <footer>
     <div class="foot-grid">
         <div><div class="foot-brand">☸ Seela suwa herath</div><p class="foot-tag">Supporting monastery welfare through community generosity, transparent governance, and compassionate care.</p></div>
-        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/test/pages/public/public_donate.php">Donate</a></li><li><a href="/test/pages/public/public_transparency.php">Transparency</a></li><li><a href="register.php">Register</a></li><li><a href="/test/pages/auth/login.php">Sign In</a></li></ul></div>
+        <div class="foot-col"><h4>Platform</h4><ul><li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php">Donate</a></li><li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li><li><a href="register.php">Register</a></li><li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li></ul></div>
         <div class="foot-col"><h4>Welfare</h4><ul><li><a href="#">Healthcare</a></li><li><a href="#">Housing</a></li><li><a href="#">Appointments</a></li><li><a href="#">Reports</a></li></ul></div>
         <div class="foot-col"><h4>Info</h4><ul><li><a href="#">About Us</a></li><li><a href="#">Contact</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
     </div>
@@ -324,3 +324,4 @@ if (pwInput) {
 </script>
 </body>
 </html>
+

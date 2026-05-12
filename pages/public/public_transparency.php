@@ -370,7 +370,7 @@ if ($qAcceptedDates) {
 
 <!-- â•â•â• NAV â•â•â• -->
 <nav>
-    <a href="/test/index.php" class="nav-logo">
+    <a href="/monastery-healthcare-donation-app/index.php" class="nav-logo">
         <div class="nav-logo-mark">&#9784;</div>
         <div>
             <span class="nav-logo-name">Seela suwa herath</span>
@@ -378,11 +378,11 @@ if ($qAcceptedDates) {
         </div>
     </a>
     <ul class="nav-links">
-        <li><a href="/test/index.php#mission">Our Mission</a></li>
-        <li><a href="/test/index.php#how">How It Works</a></li>
-        <li><a href="/test/pages/public/public_transparency.php" class="active">Transparency</a></li>
-        <li><a href="/test/pages/auth/login.php">Sign In</a></li>
-        <li><a href="/test/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#mission">Our Mission</a></li>
+        <li><a href="/monastery-healthcare-donation-app/index.php#how">How It Works</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php" class="active">Transparency</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li>
+        <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" class="nav-donate">Donate Now</a></li>
     </ul>
 </nav>
 
@@ -679,7 +679,7 @@ require_once __DIR__ . '/../../includes/init.php';
             <div style="font-size:2.4rem;margin-bottom:14px">&#128591;</div>
             <div style="font-family:'EB Garamond',serif;font-size:1.4rem;color:var(--text-dark);margin-bottom:12px;font-weight:400">Be Part of This</div>
             <div style="font-size:.86rem;color:var(--text-mid);margin-bottom:24px;line-height:1.7">Your donation appears in this report &mdash; fully transparent, fully accountable.</div>
-            <a href="/test/pages/public/public_donate.php" style="display:inline-block;background:var(--orange);color:#fff;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:.93rem;font-weight:600;transition:all .2s;box-shadow:0 4px 12px rgba(212,98,42,.18)">Contribute Now &rarr;</a>
+            <a href="/monastery-healthcare-donation-app/pages/public/public_donate.php" style="display:inline-block;background:var(--orange);color:#fff;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:.93rem;font-weight:600;transition:all .2s;box-shadow:0 4px 12px rgba(212,98,42,.18)">Contribute Now &rarr;</a>
         </div>
 
     </div><!-- end sidebar -->
@@ -695,10 +695,10 @@ require_once __DIR__ . '/../../includes/init.php';
         <div class="foot-col">
             <h4>Platform</h4>
             <ul>
-                <li><a href="/test/pages/public/public_donate.php">Donate</a></li>
-                <li><a href="/test/pages/public/public_transparency.php">Transparency</a></li>
-                <li><a href="/test/pages/auth/register.php">Register</a></li>
-                <li><a href="/test/pages/auth/login.php">Sign In</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/public/public_donate.php">Donate</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/public/public_transparency.php">Transparency</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/auth/register.php">Register</a></li>
+                <li><a href="/monastery-healthcare-donation-app/pages/auth/login.php">Sign In</a></li>
             </ul>
         </div>
         <div class="foot-col">
@@ -740,4 +740,5 @@ document.querySelectorAll('.bar').forEach(b => {
 </script>
 </body>
 </html>
+
 

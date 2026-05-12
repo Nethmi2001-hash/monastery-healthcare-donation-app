@@ -29,6 +29,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 // Redirect to login page
-header("Location: /test/pages/auth/login.php?logout=success");
+header("Location: /monastery-healthcare-donation-app/pages/auth/login.php?logout=success");
 exit();
 ?>
+
