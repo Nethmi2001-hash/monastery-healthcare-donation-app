@@ -15,6 +15,49 @@ $success = "";
 
 $days_map = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+function normalizeRoomSlotTime(string $timeValue): ?string {
+    $timeValue = trim($timeValue);
+    if ($timeValue === '') {
+        return null;
+    }
+
+    $formats = ['H:i', 'H:i:s', 'g:i A', 'g:i a'];
+    foreach ($formats as $format) {
+        $dt = DateTime::createFromFormat($format, $timeValue);
+        if ($dt instanceof DateTime) {
+            return $dt->format('H:i:s');
+        }
+    }
+
+    return null;
+}
+
+function roomSlotExists(mysqli $con, int $roomId, int $dayOfWeek, string $startTime, ?int $excludeSlotId = null): bool {
+    $sql = "SELECT room_slot_id FROM room_slots WHERE room_id = ? AND day_of_week = ? AND start_time = ?";
+    if ($excludeSlotId !== null) {
+        $sql .= " AND room_slot_id <> ?";
+    }
+    $sql .= " LIMIT 1";
+
+    $stmt = $con->prepare($sql);
+    if (!$stmt) {
+        return false;
+    }
+
+    if ($excludeSlotId !== null) {
+        $stmt->bind_param('iisi', $roomId, $dayOfWeek, $startTime, $excludeSlotId);
+    } else {
+        $stmt->bind_param('iis', $roomId, $dayOfWeek, $startTime);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $exists = $result && $result->num_rows > 0;
+    $stmt->close();
+
+    return $exists;
+}
+
 // Handle CREATE / UPDATE / DELETE
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
     $form_name = $_POST['form_name'];
@@ -22,20 +65,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
     if ($form_name === 'create') {
         $room_id = intval($_POST['room_id']);
         $day_of_week = intval($_POST['day_of_week']);
-        $start_time = $_POST['start_time'];
-        $end_time = $_POST['end_time'];
+        $start_time = normalizeRoomSlotTime($_POST['start_time'] ?? '');
+        $end_time = normalizeRoomSlotTime($_POST['end_time'] ?? '');
 
-        if (strtotime($end_time) <= strtotime($start_time)) {
+        if (!$start_time || !$end_time) {
+            $error = "Please enter valid start and end times.";
+        } elseif (strtotime($end_time) <= strtotime($start_time)) {
             $error = "End time must be after start time.";
+        } elseif (roomSlotExists($con, $room_id, $day_of_week, $start_time)) {
+            $error = "A room slot already exists for that room, day, and start time.";
         } else {
-            $stmt = $con->prepare("INSERT INTO room_slots (room_id, day_of_week, start_time, end_time, is_active) VALUES (?, ?, ?, ?, 1)");
-            $stmt->bind_param("iiss", $room_id, $day_of_week, $start_time, $end_time);
-            if ($stmt->execute()) {
-                $success = "Room slot added successfully!";
-            } else {
-                $error = "Error: " . $stmt->error;
+            try {
+                $stmt = $con->prepare("INSERT INTO room_slots (room_id, day_of_week, start_time, end_time, is_active) VALUES (?, ?, ?, ?, 1)");
+                $stmt->bind_param("iiss", $room_id, $day_of_week, $start_time, $end_time);
+                if ($stmt->execute()) {
+                    $success = "Room slot added successfully!";
+                } else {
+                    $error = "Error: " . $stmt->error;
+                }
+                $stmt->close();
+            } catch (mysqli_sql_exception $e) {
+                $error = "That room slot already exists. Please choose a different start time.";
             }
-            $stmt->close();
         }
     }
 
@@ -43,21 +94,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['form_name'])) {
         $room_slot_id = intval($_POST['room_slot_id']);
         $room_id = intval($_POST['room_id']);
         $day_of_week = intval($_POST['day_of_week']);
-        $start_time = $_POST['start_time'];
-        $end_time = $_POST['end_time'];
+        $start_time = normalizeRoomSlotTime($_POST['start_time'] ?? '');
+        $end_time = normalizeRoomSlotTime($_POST['end_time'] ?? '');
         $is_active = isset($_POST['is_active']) ? 1 : 0;
 
-        if (strtotime($end_time) <= strtotime($start_time)) {
+        if (!$start_time || !$end_time) {
+            $error = "Please enter valid start and end times.";
+        } elseif (strtotime($end_time) <= strtotime($start_time)) {
             $error = "End time must be after start time.";
+        } elseif (roomSlotExists($con, $room_id, $day_of_week, $start_time, $room_slot_id)) {
+            $error = "A room slot already exists for that room, day, and start time.";
         } else {
-            $stmt = $con->prepare("UPDATE room_slots SET room_id=?, day_of_week=?, start_time=?, end_time=?, is_active=? WHERE room_slot_id=?");
-            $stmt->bind_param("iissii", $room_id, $day_of_week, $start_time, $end_time, $is_active, $room_slot_id);
-            if ($stmt->execute()) {
-                $success = "Room slot updated successfully!";
-            } else {
-                $error = "Error: " . $stmt->error;
+            try {
+                $stmt = $con->prepare("UPDATE room_slots SET room_id=?, day_of_week=?, start_time=?, end_time=?, is_active=? WHERE room_slot_id=?");
+                $stmt->bind_param("iissii", $room_id, $day_of_week, $start_time, $end_time, $is_active, $room_slot_id);
+                if ($stmt->execute()) {
+                    $success = "Room slot updated successfully!";
+                } else {
+                    $error = "Error: " . $stmt->error;
+                }
+                $stmt->close();
+            } catch (mysqli_sql_exception $e) {
+                $error = "That room slot already exists. Please choose a different start time.";
             }
-            $stmt->close();
         }
     }
 
@@ -217,16 +276,17 @@ while ($r = $rooms_res->fetch_assoc()) {
                                             <div class="col-md-6">
                                                 <div class="form-group-modern">
                                                     <label class="form-label-modern">Start Time</label>
-                                                    <input type="time" name="start_time" class="form-control-modern" value="<?= $row['start_time'] ?>" required>
+                                                    <input type="time" name="start_time" class="form-control-modern" value="<?= date('H:i', strtotime($row['start_time'])) ?>" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group-modern">
                                                     <label class="form-label-modern">End Time</label>
-                                                    <input type="time" name="end_time" class="form-control-modern" value="<?= $row['end_time'] ?>" required>
+                                                    <input type="time" name="end_time" class="form-control-modern" value="<?= date('H:i', strtotime($row['end_time'])) ?>" required>
                                                 </div>
                                             </div>
                                         </div>
+                                        <small style="color:var(--text-secondary);display:block;margin-top:4px;">Example: 14:00 means 2:00 PM. If you want a 2-hour slot, set the end time 2 hours later.</small>
 
                                         <div class="form-check" style="margin-top:8px;">
                                             <input type="checkbox" name="is_active" class="form-check-input" id="active<?= $row['room_slot_id'] ?>" <?= $row['is_active'] ? 'checked' : '' ?>>
@@ -322,6 +382,7 @@ while ($r = $rooms_res->fetch_assoc()) {
                             </div>
                         </div>
                     </div>
+                    <small style="color:var(--text-secondary);display:block;margin-top:4px;">Example: 14:00 means 2:00 PM. If you want a 2-hour slot, set the end time 2 hours later.</small>
 
                     <div class="alert-modern alert-info-modern" style="margin-top:12px;">
                         <i class="bi bi-info-circle"></i>
