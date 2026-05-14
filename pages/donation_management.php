@@ -552,7 +552,7 @@ require_once __DIR__ . '/../includes/init.php';
                                         </button>
                                     <?php endif; ?>
                                     <?php if ($st === 'verified'): ?>
-                                        <a href="api/generate_receipt.php?id=<?= $donation['donation_id'] ?>" target="_blank" class="btn-modern btn-primary-modern btn-sm-modern" title="Download Receipt">
+                                        <a href="../api/generate_receipt.php?id=<?= $donation['donation_id'] ?>" target="_blank" class="btn-modern btn-primary-modern btn-sm-modern" title="Download Receipt">
                                             <i class="bi bi-file-earmark-pdf"></i>
                                         </a>
                                     <?php endif; ?>

@@ -532,7 +532,7 @@ function exportToCSV() {
     const startDate = '<?= $start_date ?>';
     const endDate = '<?= $end_date ?>';
     
-    window.location.href = `api/export_report.php?type=${reportType}&start=${startDate}&end=${endDate}`;
+    window.location.href = `../api/export_report.php?type=${reportType}&start=${startDate}&end=${endDate}`;
 }
 
 // Print styles
