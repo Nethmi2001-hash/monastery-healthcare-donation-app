@@ -171,6 +171,26 @@ if ($qRecent) {
     }
 }
 
+$conn->query("CREATE TABLE IF NOT EXISTS donation_date_requests (
+    request_id INT PRIMARY KEY AUTO_INCREMENT,
+    donor_name VARCHAR(120) NOT NULL,
+    donor_email VARCHAR(160) NOT NULL,
+    donor_phone VARCHAR(40) NOT NULL,
+    requested_date DATE NOT NULL,
+    meal_type VARCHAR(20) NOT NULL DEFAULT 'lunch',
+    status ENUM('pending','approved','rejected') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reviewed_by INT NULL,
+    reviewed_at TIMESTAMP NULL,
+    INDEX idx_status (status),
+    INDEX idx_requested_date (requested_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+$mealColRes = $conn->query("SELECT COUNT(*) AS c FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'donation_date_requests' AND COLUMN_NAME = 'meal_type'");
+if ($mealColRes && (int)$mealColRes->fetch_assoc()['c'] === 0) {
+    $conn->query("ALTER TABLE donation_date_requests ADD COLUMN meal_type VARCHAR(20) NOT NULL DEFAULT 'lunch' AFTER requested_date");
+}
+
 $acceptedDatesRows = [];
 $acceptedDatesPerPage = 5;
 $acceptedDatesPage = max(1, (int)($_GET['alms_page'] ?? 1));

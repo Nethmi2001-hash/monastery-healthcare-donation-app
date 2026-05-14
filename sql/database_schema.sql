@@ -268,7 +268,26 @@ CREATE TABLE donations (
 ) ENGINE=InnoDB;
 
 -- ============================================
--- 13. BILLS TABLE
+-- 13. DONATION DATE REQUESTS TABLE
+-- ============================================
+CREATE TABLE donation_date_requests (
+    request_id INT PRIMARY KEY AUTO_INCREMENT,
+    donor_name VARCHAR(120) NOT NULL,
+    donor_email VARCHAR(160) NOT NULL,
+    donor_phone VARCHAR(40) NOT NULL,
+    requested_date DATE NOT NULL,
+    meal_type VARCHAR(20) NOT NULL DEFAULT 'lunch',
+    status ENUM('pending','approved','rejected') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reviewed_by INT NULL,
+    reviewed_at TIMESTAMP NULL,
+    INDEX idx_status (status),
+    INDEX idx_requested_date (requested_date),
+    FOREIGN KEY (reviewed_by) REFERENCES users(user_id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- 14. BILLS TABLE
 -- ============================================
 CREATE TABLE bills (
     bill_id INT PRIMARY KEY AUTO_INCREMENT,
