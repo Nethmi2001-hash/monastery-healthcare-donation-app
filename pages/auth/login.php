@@ -14,7 +14,7 @@ function ensureDefaultAdminAccount(mysqli $conn): void {
     $adminPassword = 'admin123';
 
     $stmt = $conn->prepare(
-        "SELECT u.user_id
+        "SELECT u.user_id, u.password_hash, u.status
          FROM users u
          JOIN roles r ON u.role_id = r.role_id
          WHERE u.email = ? AND r.role_name = 'Admin'
@@ -28,10 +28,27 @@ function ensureDefaultAdminAccount(mysqli $conn): void {
     $stmt->bind_param('s', $adminEmail);
     $stmt->execute();
     $result = $stmt->get_result();
-    $adminExists = $result && $result->num_rows > 0;
+    $admin = $result ? $result->fetch_assoc() : null;
     $stmt->close();
 
-    if ($adminExists) {
+    if ($admin) {
+        $isValidPassword = password_verify($adminPassword, (string)$admin['password_hash']);
+        $isActive = strtolower((string)$admin['status']) === 'active';
+
+        if ($isValidPassword && $isActive) {
+            return;
+        }
+
+        $passwordHash = password_hash($adminPassword, PASSWORD_BCRYPT);
+        $updateStmt = $conn->prepare('UPDATE users SET password_hash = ?, status = "active" WHERE user_id = ? LIMIT 1');
+
+        if ($updateStmt) {
+            $userId = (int)$admin['user_id'];
+            $updateStmt->bind_param('si', $passwordHash, $userId);
+            $updateStmt->execute();
+            $updateStmt->close();
+        }
+
         return;
     }
 
