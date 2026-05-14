@@ -1,10 +1,11 @@
 <?php
 require_once __DIR__ . '/../includes/init.php';
 session_start();
+require_once ROOT_PATH . 'includes/csrf.php';
 
 // Access control
 if (empty($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    header("Location: /monastery-healthcare-donation-app/login.php");
+    header("Location: /monastery-healthcare-donation-app/pages/auth/login.php");
     exit();
 }
 
@@ -18,14 +19,17 @@ $preview_data = [];
 
 // Handle file upload
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['excel_file'])) {
+    if (!validateCSRFToken()) {
+        $error = "Security validation failed. Please refresh the page and try again.";
+    } else {
     $file = $_FILES['excel_file'];
     
     // Validate file
-    $allowed_extensions = ['xlsx', 'xls', 'csv'];
+    $allowed_extensions = ['csv'];
     $file_ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
     
     if (!in_array($file_ext, $allowed_extensions)) {
-        $error = "Please upload a valid Excel file (.xlsx, .xls, or .csv)";
+        $error = "Please upload a CSV file exported from Excel (.csv).";
     } elseif ($file['size'] > 5000000) { // 5MB limit
         $error = "File size must be less than 5MB";
     } else {
@@ -109,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['excel_file'])) {
             fclose($handle);
         }
     }
+    }
 }
 
 $conn->close();
@@ -116,7 +121,7 @@ $conn->close();
 <!DOCTYPE html>
 <html lang="en">
 <head>    <meta charset="UTF-8">
-    <title>Import Monk Data - Excel Upload</title>
+    <title>Import Monk Data - CSV Upload</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
@@ -126,8 +131,8 @@ $conn->close();
 <div class="container-fluid mt-4 mb-5 px-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h2 class="mb-0"><i class="bi bi-file-earmark-excel"></i> Import Monk Data from Excel</h2>
-            <p class="text-muted mb-0 mt-1">Bulk upload monk information from Excel spreadsheet</p>
+            <h2 class="mb-0"><i class="bi bi-file-earmark-spreadsheet"></i> Import Monk Data</h2>
+            <p class="text-muted mb-0 mt-1">Upload a CSV exported from Excel to bulk import monk information</p>
         </div>
     </div>
 
@@ -148,19 +153,21 @@ $conn->close();
         <div class="col-md-8">
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0"><i class="bi bi-cloud-upload"></i> Upload Excel File</h5>
+                    <h5 class="mb-0"><i class="bi bi-cloud-upload"></i> Upload CSV File</h5>
                 </div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                        <?php csrfField(); ?>
                         <div class="form-group-modern">
                             <div class="upload-area border border-2 border-dashed rounded-3 p-5 text-center" role="button" onclick="document.getElementById('excel_file').click()">
                                 <i class="bi bi-file-earmark-excel display-3 text-success"></i>
-                                <h4 class="mt-3">Click to Select Excel File</h4>
+                                <h4 class="mt-3">Click to Select CSV File</h4>
                                 <p class="text-muted">or drag and drop here</p>
-                                <p><small class="text-muted">Supported: .xlsx, .xls, .csv (Max 5MB)</small></p>
+                                <p><small class="text-muted">Supported: .csv only (Max 5MB)</small></p>
                             </div>
                         </div>
-                        <input type="file" name="excel_file" id="excel_file" accept=".xlsx,.xls,.csv" class="d-none" onchange="this.form.submit()">
+                        <input type="file" name="excel_file" id="excel_file" accept=".csv" class="d-none" onchange="document.getElementById('selectedFileName').textContent = this.files[0] ? this.files[0].name : 'No file selected'; this.form.submit()">
+                        <div id="selectedFileName" class="small text-muted mt-2">No file selected</div>
                         
                         <?php if (!empty($preview_data)): ?>
                             <input type="hidden" name="confirm_import" value="1">
@@ -212,8 +219,8 @@ $conn->close();
                         <span class="badge bg-dark rounded-circle me-3 d-flex align-items-center justify-content-center" style="width:28px;height:28px;min-width:28px;">1</span>
                         <div>
                             <strong>Download Template</strong>
-                            <p class="text-muted mb-0 small">Get the Excel template with correct columns</p>
-                            <a href="assets/monk_import_template.csv" class="btn-modern btn-primary-modern mt-2" download>
+                            <p class="text-muted mb-0 small">Get the CSV template with correct columns</p>
+                            <a href="/monastery-healthcare-donation-app/assets/monk_import_template.csv" class="btn-modern btn-primary-modern mt-2" download>
                                 <i class="bi bi-download"></i> Download Template
                             </a>
                         </div>
@@ -271,7 +278,7 @@ $conn->close();
                 </div>
                 <div class="card-body">
                     <ul class="small text-muted mb-0">
-                        <li>Use the template for correct format</li>
+                        <li>Use the CSV template for the correct format</li>
                         <li>Date format: YYYY-MM-DD</li>
                         <li>Remove sample data before filling</li>
                         <li>Check for duplicates</li>
@@ -322,6 +329,7 @@ function handleDrop(e) {
     const dt = e.dataTransfer;
     const files = dt.files;
     fileInput.files = files;
+    document.getElementById('selectedFileName').textContent = files[0] ? files[0].name : 'No file selected';
     document.getElementById('uploadForm').submit();
 }
 </script>
